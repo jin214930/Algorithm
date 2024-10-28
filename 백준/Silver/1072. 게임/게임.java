@@ -20,6 +20,5 @@ public class Main {
 				s = m + 1;
 		}
 		System.out.println(ans);
-
 	}
 }
