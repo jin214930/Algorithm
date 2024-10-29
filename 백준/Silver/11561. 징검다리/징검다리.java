@@ -7,7 +7,7 @@ public class Main {
 		int t = Integer.parseInt(br.readLine());
 		while (t-- > 0) {
 			long n = Long.parseLong(br.readLine());
-			long s = 1, e = 1000000000L;
+			long s = 1, e = 1000000000;
 			long ans = 0;
 			while (s <= e) {
 				long m = (s + e) / 2;
