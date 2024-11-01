@@ -11,8 +11,8 @@ class Solution {
                 mp.put(s[1], 1);
         }
         int ans = 1;
-        for(String i : mp.keySet()) 
-            ans *= mp.get(i) + 1;
+        for(int i : mp.values())
+            ans *= i + 1;
         return ans - 1;
     }
 }
