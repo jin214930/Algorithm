@@ -7,16 +7,16 @@ public class Main {
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		int n = Integer.parseInt(st.nextToken());
-		long m = Long.parseLong(st.nextToken());
-		long[] a = new long[n];
+		int m = Integer.parseInt(st.nextToken());
+		int[] a = new int[n];
 		st = new StringTokenizer(br.readLine());
 		for (int i = 0; i < n; i++)
-			a[i] = Long.parseLong(st.nextToken());
-		long s = 0, e = 1000000000, ans = 0;
+			a[i] = Integer.parseInt(st.nextToken());
+		int s = 0, e = 1000000000, ans = 0;
 		while (s <= e) {
-			long mid = (s + e) / 2;
+			int mid = (s + e) / 2;
 			long sum = 0;
-			for (long i : a)
+			for (int i : a)
 				sum += Math.max(0, i - mid);
 			if (sum >= m) {
 				ans = mid;
