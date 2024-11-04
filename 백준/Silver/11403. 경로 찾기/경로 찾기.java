@@ -8,15 +8,16 @@ public class Main {
 
 	static void dfs(int x) {
 		for (int i = 0; i < n; i++) {
-			if (visited[i] == 0 && adj[x][i] == 1) {
-				visited[i] = 1;
-				dfs(i);
-			}
+			if (visited[i] == 1 || adj[x][i] == 0)
+				continue;
+			visited[i] = 1;
+			dfs(i);
 		}
 	}
 
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 		n = Integer.parseInt(br.readLine());
 		adj = new int[n][n];
 
@@ -30,8 +31,11 @@ public class Main {
 			visited = new int[n];
 			dfs(i);
 			for (int j = 0; j < n; j++)
-				System.out.print(visited[j] + " ");
-			System.out.println();
+				bw.write(visited[j] + " ");
+			bw.write("\n");
 		}
+
+		bw.flush();
+		bw.close();
 	}
 }
