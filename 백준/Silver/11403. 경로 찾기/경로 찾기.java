@@ -4,16 +4,6 @@ import java.io.*;
 public class Main {
 	static int n;
 	static int[][] adj;
-	static int[] visited;
-
-	static void dfs(int x) {
-		for (int i = 0; i < n; i++) {
-			if (visited[i] == 1 || adj[x][i] == 0)
-				continue;
-			visited[i] = 1;
-			dfs(i);
-		}
-	}
 
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -28,13 +18,19 @@ public class Main {
 		}
 
 		for (int i = 0; i < n; i++) {
-			visited = new int[n];
-			dfs(i);
-			for (int j = 0; j < n; j++)
-				bw.write(visited[j] + " ");
-			bw.write("\n");
+			for (int j = 0; j < n; j++) {
+				for (int k = 0; k < n; k++) {
+					if (adj[j][i] == 1 && adj[i][k] == 1)
+						adj[j][k] = 1;
+				}
+			}
 		}
 
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++)
+				bw.write(adj[i][j] + " ");
+			bw.write("\n");
+		}
 		bw.flush();
 		bw.close();
 	}
