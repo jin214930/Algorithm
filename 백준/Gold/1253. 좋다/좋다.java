@@ -26,7 +26,7 @@ public class Main {
 						continue;
 					else if (a[j] == tmp && mp.get(a[j]) == 1)
 						continue;
-					else if (a[i] == tmp && a[j] == tmp && mp.get(a[i]) <= 2)
+					else if (a[i] == tmp && a[j] == tmp && mp.get(a[i]) == 2)
 						continue;
 					ans.add(tmp);
 				}
