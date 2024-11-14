@@ -3,8 +3,6 @@ import java.util.*;
 class Solution {
     public int solution(int[][] routes) {
         Arrays.sort(routes, (o1, o2) -> {
-            if (o1[0] == o2[0])
-                return o1[1] - o2[1];
             return o1[0] - o2[0];
         });
         
@@ -17,10 +15,8 @@ class Solution {
                 tmp = i[1];
                 ans++;
             }
-            else {
-                if(i[1] < tmp)
-                    tmp = i[1];
-            }
+            else if (i[1] < tmp)
+                tmp = i[1];
         }
         
         return ans;
