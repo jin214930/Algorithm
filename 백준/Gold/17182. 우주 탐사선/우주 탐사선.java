@@ -2,7 +2,7 @@ import java.util.*;
 import java.io.*;
 
 public class Main {
-	static int[][] d;
+	static int d[][];
 	static boolean[] visited;
 	static int n, ans = 1000000000;
 
