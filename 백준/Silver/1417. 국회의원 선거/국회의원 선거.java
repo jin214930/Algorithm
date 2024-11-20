@@ -11,15 +11,8 @@ public class Main {
 		for (int i = 1; i < n; i++)
 			pq.add(Integer.parseInt(br.readLine()));
 
-		if (n == 1) {
-			bw.write("0");
-			bw.flush();
-			bw.close();
-			return;
-		}
-
 		int ans = 0;
-		while (pq.peek() >= x) {
+		while (!pq.isEmpty() && pq.peek() >= x) {
 			x++;
 			pq.add(pq.poll() - 1);
 			ans++;
