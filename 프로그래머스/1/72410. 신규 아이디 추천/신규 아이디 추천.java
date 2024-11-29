@@ -35,10 +35,9 @@ class Solution {
             if (sb.charAt(sb.length() - 1) == '.')
                 sb.deleteCharAt(sb.length() - 1);
         }
-        if (sb.length() <= 2) {
-            while (sb.length() != 3)
-                sb.append(sb.charAt(sb.length() - 1));
-        }
+     
+        while (sb.length() < 3)
+            sb.append(sb.charAt(sb.length() - 1));
                 
         return sb.toString();
     }
