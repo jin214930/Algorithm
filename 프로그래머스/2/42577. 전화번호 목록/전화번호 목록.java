@@ -1,14 +1,18 @@
 import java.util.*;
 
 class Solution {
-    public boolean solution(String[] a) {
-        Arrays.sort(a);
-        for(int i = 0; i < a.length - 1;i++) {
-            if(a[i].length() <= a[i+1].length() && a[i+1].substring(0, a[i].length()).equals(a[i]))
+    public boolean solution(String[] phone_book) {
+        Arrays.sort(phone_book);
+        for (int i = 0; i < phone_book.length - 1; i++) {
+            String pn1 = phone_book[i];
+            String pn2 = phone_book[i + 1];
+    
+            if (pn1.length() > pn2.length() && pn2.equals(pn1.substring(0, pn2.length())))
                 return false;
-            if(a[i+1].length() <= a[i].length() && a[i].substring(0, a[i+1].length()).equals(a[i + 1]))
+            else if (pn2.length() > pn1.length() && pn1.equals(pn2.substring(0, pn1.length())))
                 return false;
         }
+        
         return true;
     }
 }
