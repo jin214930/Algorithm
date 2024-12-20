@@ -2,20 +2,20 @@ import java.util.*;
 
 class Solution {
     public String solution(String[] participant, String[] completion) {
-        HashMap<String, Integer> mp = new HashMap<>();
+        Map<String, Integer> map = new HashMap<>();
         
         for (String s : completion) {
-            if (mp.containsKey(s))
-                mp.put(s, mp.get(s) + 1);
+            if (map.containsKey(s))
+                map.put(s, map.get(s) + 1);
             else
-                mp.put(s, 1);
+                map.put(s, 1);
         }
         
         for (String s : participant) {
-            if (mp.containsKey(s) && mp.get(s) != 0)  
-                mp.put(s, mp.get(s) - 1);
-            else 
-                return s;            
+            if (map.containsKey(s) && map.get(s) > 0) 
+                map.put(s, map.get(s) - 1);
+            else
+                return s;
         }
         
         return "";
