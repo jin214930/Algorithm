@@ -1,33 +1,30 @@
 import java.util.*;
 class Solution {
     public int[] solution(int[] progresses, int[] speeds) {
-        ArrayList<Integer> al = new ArrayList<>();
-        int[] a = new int[speeds.length];
-        int cnt = 0, tmp = 0;
-        for(int i = 0; i < a.length;i++) {
-            
-            a[i] = (100 - progresses[i]) / speeds[i];
-            if((100 - progresses[i]) % speeds[i] != 0)
-                a[i]++;
-            if(tmp == 0) {
-                tmp = a[i];
-                cnt = 1;
-                continue;
-            }
-            if(a[i] > tmp) {
-                tmp = a[i];
-                al.add(cnt);
-                cnt = 1;
-            }
-            else
-                cnt++;
+        int[] daysToComplete = new int[progresses.length];
+        for (int i = 0; i < progresses.length; i++) {
+            int work = 100 - progresses[i];
+            daysToComplete[i] = (work / speeds[i]) + (work % speeds[i] == 0 ? 0 : 1);
         }
-        if(cnt != 0)
-            al.add(cnt);
         
-        int[] ans = new int[al.size()];
+        List<Integer> ansList = new ArrayList<>();
+        int now = 0;
+        int cnt = 0;
+        for (int i : daysToComplete) {
+            if (i <= now)
+                cnt++;
+            else {
+                if (now != 0)
+                    ansList.add(cnt);
+                now = i;
+                cnt = 1;
+            }
+        }
+        ansList.add(cnt);
+        
+        int[] ans = new int[ansList.size()];
         int idx = 0;
-        for(int i : al) 
+        for (int i : ansList)
             ans[idx++] = i;
         
         return ans;
