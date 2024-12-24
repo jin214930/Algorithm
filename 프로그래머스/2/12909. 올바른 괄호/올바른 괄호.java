@@ -10,7 +10,7 @@ class Solution {
             else if (!st.isEmpty() && st.peek() == '(')
                 st.pop();
             else
-                st.push(c);
+                return false;
         }
         
         return st.isEmpty();
