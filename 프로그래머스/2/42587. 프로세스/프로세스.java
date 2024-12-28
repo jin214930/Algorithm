@@ -1,23 +1,23 @@
 import java.util.*;
 
 class Process {
-    int idx;
     int priority;
+    int idx;
     
-    public Process(int idx, int priority) {
-        this.idx = idx;
+    public Process(int priority, int idx) {
         this.priority = priority;
+        this.idx = idx;
     }
 }
 
 class Solution {
     public int solution(int[] priorities, int location) {
-        Queue<Process> q = new LinkedList<>();
         PriorityQueue<Integer> pq = new PriorityQueue<>(Collections.reverseOrder());
+        Queue<Process> q = new LinkedList<>();
         
         for (int i = 0; i < priorities.length; i++) {
-            q.add(new Process(i, priorities[i]));
             pq.add(priorities[i]);
+            q.add(new Process(priorities[i], i));
         }
         
         int ans = 1;
@@ -27,11 +27,10 @@ class Solution {
                 q.add(q.peek());
                 q.poll();
             }
-        
-            if (q.peek().idx == location) 
-                return ans;
             
-            q.poll();
+            Process p = q.poll();
+            if (p.idx == location)
+                return ans;
             ans++;
         }
     }
