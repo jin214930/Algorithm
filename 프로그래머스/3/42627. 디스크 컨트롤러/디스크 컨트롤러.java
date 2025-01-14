@@ -2,34 +2,32 @@ import java.util.*;
 
 class Job implements Comparable<Job> {
     int n;
-    int s;
-    int l;
+    int r_time;
+    int time;
     
-    public Job(int n, int s, int l) {
+    public Job(int n, int r_time, int time) {
         this.n = n;
-        this.s = s;
-        this.l = l;
+        this.r_time = r_time;
+        this.time = time;
     }
     
     @Override
     public int compareTo(Job j) {
-        if (this.l == j.l) {
-            if (this.s == j.s) 
+        if (j.time == this.time) {
+            if (j.r_time == this.r_time)
                 return this.n - j.n;
-            return this.s - j.s;
+            return this.r_time - j.r_time; 
         }
-        return this.l - j.l;
+        return this.time - j.time;
     }
 }
 
-class Solution {    
+class Solution {
     public int solution(int[][] jobs) {
         Arrays.sort(jobs, (j1, j2) -> j1[0] - j2[0]);
         PriorityQueue<Job> pq = new PriorityQueue<>();
         
-        int t = 0;
-        int idx = 0;
-        int ans = 0;
+        int t = 0, idx = 0, ans = 0;
         
         while(!(idx == jobs.length && pq.isEmpty())) {
             while(idx < jobs.length && jobs[idx][0] <= t) {
@@ -41,8 +39,8 @@ class Solution {
                t = jobs[idx][0];
             else {
                 Job j = pq.poll();
-                t += j.l;
-                ans += t - j.s;
+                t += j.time;
+                ans += t - j.r_time;
             }
         }
         
