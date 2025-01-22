@@ -2,7 +2,7 @@ import java.util.*;
 
 class Solution {
     public String solution(int[] numbers) {
-        String ans = "";
+        StringBuilder sb = new StringBuilder();
         List<String> list = new ArrayList<>();
         
         for (int number : numbers)
@@ -15,8 +15,9 @@ class Solution {
         });
         
         for (String s : list)
-            ans += s;
+            sb.append(s);
         
+        String ans = sb.toString();
         if (ans.startsWith("0"))
             ans = "0";
         
