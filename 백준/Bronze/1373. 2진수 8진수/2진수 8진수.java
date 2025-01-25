@@ -8,20 +8,18 @@ public class Main {
 
         String s = br.readLine();
         StringBuilder sb = new StringBuilder();
-
-        int tmp1 = 1, tmp2 = 0;
+        int tmp = 1, sum = 0;
         for (int i = s.length() - 1; i >= 0; i--) {
-            if (tmp1 == 8) {
-                tmp1 = 1;
-                sb.insert(0, tmp2);
-                tmp2 = 0;
+            if (tmp == 8) {
+                tmp = 1;
+                sb.insert(0, sum);
+                sum = 0;
             }
-            if (s.charAt(i) == '1')
-                tmp2 += tmp1;
-
-            tmp1 *= 2;
+            sum += tmp * (s.charAt(i) - '0');
+            tmp *= 2;
         }
-        sb.insert(0, tmp2);
+        
+        sb.insert(0, sum);
 
         bw.write(sb.toString());
         bw.flush();
