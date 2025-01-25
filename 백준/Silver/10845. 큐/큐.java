@@ -5,16 +5,13 @@ public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-
         int n = Integer.parseInt(br.readLine());
-        Queue<Integer> q = new LinkedList<>();
-        int x = -1;
 
+        Queue<Integer> q = new LinkedList<>();
+        int x = 0;
         while (n-- > 0) {
             StringTokenizer st = new StringTokenizer(br.readLine());
-            String cmd = st.nextToken();
-
-            switch (cmd) {
+            switch (st.nextToken()) {
                 case "push":
                     x = Integer.parseInt(st.nextToken());
                     q.add(x);
@@ -37,7 +34,7 @@ public class Main {
         }
 
         bw.flush();
-        br.close();
         bw.close();
+        br.close();
     }
 }
