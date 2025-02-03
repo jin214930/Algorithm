@@ -8,12 +8,10 @@ class Solution {
             flag = true;
             return;
         }
-        if (s.length() == 5)
-            return;
+        if (s.length() == 5) return;
         
         for (int i = idx; i < 5; i++) {
-            if (flag)
-            return;
+            if (flag) return;
             ans++;
             go(idx, s + vow[i], word);
         }
