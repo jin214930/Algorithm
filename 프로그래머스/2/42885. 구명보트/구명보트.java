@@ -2,22 +2,23 @@ import java.util.*;
 
 class Solution {
     public int solution(int[] people, int limit) {
-        int cnt = 0;
+        int ans = 0;
+        
         Arrays.sort(people);
+        
         int s = 0, e = people.length - 1;
-        while(s <= e) {
-            if(people[e] + people[s] <= limit) {
-                cnt++;
+        while (s <= e) {
+            if (people[e] + people[s] <= limit) {
+                ans++;
                 s++;
                 e--;
             }
             else {
-                cnt++;
+                ans++;
                 e--;
             }
         }
-    
 
-        return cnt;
+        return ans;
     }
 }
