@@ -31,13 +31,12 @@ public class Main {
             return;
         }
 
-        go(y, x, n / 3);
-        go(y, x + n / 3, n / 3);
-        go(y, x + 2 * n / 3, n / 3);
-        go(y + n / 3, x, n / 3);
-        go(y + n / 3, x + 2 * n / 3, n / 3);
-        go(y + 2 * n / 3, x, n / 3);
-        go(y + 2 * n / 3, x + n / 3, n / 3);
-        go(y + 2 * n / 3, x + 2 * n / 3, n / 3);
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3;j++) {
+                if(i == 1 && j == 1)
+                    continue;
+                go(y + i * n / 3, x + j * n / 3, n / 3);
+            }
+        }
     }
 }
