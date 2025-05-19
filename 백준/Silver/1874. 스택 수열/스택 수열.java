@@ -5,7 +5,7 @@ public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-        Stack<Integer> st = new Stack<>();
+        Deque<Integer> st = new ArrayDeque<>();
         StringBuilder sb = new StringBuilder();
 
         int n = Integer.parseInt(br.readLine());
@@ -25,10 +25,7 @@ public class Main {
             }
         }
 
-        if (st.isEmpty())
-            bw.write(sb.toString());
-        else
-            bw.write("NO");
+				bw.write(st.isEmpty() ? sb.toString() : "NO");
 
         bw.flush();
         bw.close();
