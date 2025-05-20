@@ -1,22 +1,22 @@
 import java.io.*;
-import java.util.Arrays;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-        String s = br.readLine();
-        int[] ans = new int[26];
-        Arrays.fill(ans, -1);
+        int[] a = new int[26];
+        Arrays.fill(a, -1);
 
+        String s = br.readLine();
         for (int i = 0; i < s.length(); i++) {
             char c = s.charAt(i);
-            if (ans[c - 'a'] == -1)
-                ans[c - 'a'] = i;
+            if (a[c - 'a'] == -1)
+                a[c - 'a'] = i;
         }
 
-        for (int i : ans)
+        for (int i : a)
             bw.write(i + " ");
 
         bw.flush();
@@ -24,4 +24,3 @@ public class Main {
         br.close();
     }
 }
-
