@@ -5,6 +5,7 @@ public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        Deque<Integer> stk = new ArrayDeque<>();
 
         int n = Integer.parseInt(br.readLine());
         int[] a = new int[n];
@@ -16,18 +17,20 @@ public class Main {
             ans[i] = -1;
         }
 
-        Stack<Integer> stk = new Stack<>();
         for (int i = 0; i < n; i++) {
-            while (!stk.empty() && a[stk.peek()] < a[i])
-                ans[stk.pop()] = a[i];
-            stk.add(i);
+            while (!stk.isEmpty() && a[stk.peek()] < a[i]) {
+                ans[stk.peek()] = a[i];
+                stk.pop();
+            }
+
+            stk.push(i);
         }
 
-        for (int i : ans)
-            bw.write(i + " ");
+        for (int i = 0; i < n; i++)
+            bw.write(ans[i] + " ");
 
         bw.flush();
-        br.close();
         bw.close();
+        br.close();
     }
 }
