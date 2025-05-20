@@ -9,27 +9,29 @@ public class Main {
         int n = Integer.parseInt(br.readLine());
         int[] a = new int[n];
         int[] ans = new int[n];
-
         Map<Integer, Integer> map = new HashMap<>();
+
         StringTokenizer st = new StringTokenizer(br.readLine());
         for (int i = 0; i < n; i++) {
             a[i] = Integer.parseInt(st.nextToken());
-            ans[i] = -1;
             map.put(a[i], map.getOrDefault(a[i], 0) + 1);
+            ans[i] = -1;
         }
 
-        Stack<Integer> stk = new Stack<>();
+        Deque<Integer> stk = new ArrayDeque<>();
         for (int i = 0; i < n; i++) {
-            while (!stk.empty() && map.get(a[stk.peek()]) < map.get(a[i]))
+            while (!stk.isEmpty() && map.get(a[stk.peek()]) < map.get(a[i])) {
                 ans[stk.pop()] = a[i];
-            stk.add(i);
+            }
+
+            stk.push(i);
         }
 
         for (int i : ans)
             bw.write(i + " ");
 
         bw.flush();
-        br.close();
         bw.close();
+        br.close();
     }
 }
