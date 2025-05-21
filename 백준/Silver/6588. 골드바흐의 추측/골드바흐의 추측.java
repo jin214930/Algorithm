@@ -8,7 +8,6 @@ public class Main {
 
         boolean[] p = new boolean[1000001];
         p[1] = true;
-
         for (int i = 2; i <= 1000000; i++) {
             if (!p[i]) {
                 for (int j = i * 2; j <= 1000000; j += i)
@@ -21,7 +20,7 @@ public class Main {
             if (n == 0)
                 break;
 
-            for (int i = 3; i <= n; i++) {
+            for (int i = 3; i <= n; i+=2) {
                 if (!p[i] && !p[n - i]) {
                     bw.write(n + " = " + i + " + " + (n - i) + "\n");
                     break;
@@ -34,4 +33,3 @@ public class Main {
         br.close();
     }
 }
-
