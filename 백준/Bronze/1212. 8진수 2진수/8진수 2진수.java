@@ -8,18 +8,18 @@ public class Main {
 
         String[] a = {"000", "001", "010", "011", "100", "101", "110", "111"};
 
+
         String s = br.readLine();
         StringBuilder sb = new StringBuilder();
 
         for (char c : s.toCharArray())
             sb.append(a[c - '0']);
 
-        String ans = sb.toString();
-        while (ans.startsWith("0") && ans.length() != 1) {
-            ans = ans.substring(1);
-        }
+        while (sb.charAt(0) == '0' && sb.length() != 1)
+            sb.deleteCharAt(0);
 
-        bw.write(ans);
+        bw.write(sb.toString());
+
         bw.flush();
         bw.close();
         br.close();
