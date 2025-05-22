@@ -7,14 +7,14 @@ public class Main {
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
         int n = Integer.parseInt(br.readLine());
-        int tmp = 2;
 
+        int tmp = 2;
         while (n != 1) {
-            if (n % tmp == 0) {
-                bw.write(tmp + "\n");
+            while (n % tmp == 0) {
                 n /= tmp;
-            } else
-                tmp++;
+                bw.write(tmp + "\n");
+            }
+            tmp++;
         }
 
         bw.flush();
