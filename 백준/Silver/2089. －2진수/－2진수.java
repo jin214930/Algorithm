@@ -6,25 +6,27 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-        StringBuilder sb = new StringBuilder();
         int n = Integer.parseInt(br.readLine());
 
         if (n == 0)
-            sb.append(0);
+            bw.write("0");
+        else {
+            StringBuilder sb = new StringBuilder();
 
-        while (n != 0) {
-            int a = n / -2;
-            int b = n % -2;
-            if (b == -1) {
-                a++;
-                b = 1;
+            while (n != 1) {
+                if (n > 0) {
+                    sb.insert(0, n % -2);
+                    n /= -2;
+                } else {
+                    sb.insert(0, Math.abs(n % -2));
+                    n = n / -2 + Math.abs(n % -2);
+                }
             }
 
-            n = a;
-            sb.append(b);
+            sb.insert(0, 1);
+            bw.write(sb.toString());
         }
 
-        bw.write(sb.reverse().toString());
         bw.flush();
         bw.close();
         br.close();
