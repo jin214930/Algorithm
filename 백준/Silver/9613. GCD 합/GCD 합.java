@@ -2,7 +2,7 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-    public static int gcd(int a, int b) {
+    static int gcd(int a, int b) {
         if (b == 0)
             return a;
         return gcd(b, a % b);
@@ -13,6 +13,7 @@ public class Main {
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
         int t = Integer.parseInt(br.readLine());
+
         while (t-- > 0) {
             StringTokenizer st = new StringTokenizer(br.readLine());
             int n = Integer.parseInt(st.nextToken());
@@ -28,6 +29,7 @@ public class Main {
 
             bw.write(ans + "\n");
         }
+
 
         bw.flush();
         bw.close();
