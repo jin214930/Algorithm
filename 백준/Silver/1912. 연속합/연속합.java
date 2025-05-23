@@ -14,17 +14,14 @@ public class Main {
 
         int[] d = new int[n];
         d[0] = a[0];
-
         int ans = d[0];
         for (int i = 1; i < n; i++) {
-            if (d[i - 1] < 0)
-                d[i] = a[i];
-            else
-                d[i] = d[i - 1] + a[i];
-            ans = Math.max(d[i], ans);
+            d[i] = Math.max(a[i], d[i - 1] + a[i]);
+            ans = Math.max(ans, d[i]);
         }
 
         bw.write(ans + "");
+
         bw.flush();
         bw.close();
         br.close();
