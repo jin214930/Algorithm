@@ -1,15 +1,22 @@
-import java.util.*;
 import java.io.*;
+import java.util.*;
 
 public class Main {
-	public static void main(String[] args) throws IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		String s = br.readLine();
-		int[] cnt = new int[26];
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-		for (int i = 0; i < s.length(); i++)
-			cnt[s.charAt(i) - 'a']++;
-		for (int i = 0; i < 26; i++)
-			System.out.print(cnt[i] + " ");
-	}
+        String s = br.readLine();
+
+        int[] cnt = new int[26];
+        for (char c : s.toCharArray())
+            cnt[c - 'a']++;
+
+        for (int i : cnt)
+            bw.write(i + " ");
+
+        bw.flush();
+        bw.close();
+        br.close();
+    }
 }
