@@ -7,28 +7,28 @@ public class Main {
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
         int n = Integer.parseInt(br.readLine());
-        Stack<Integer> stk = new Stack<>();
+
+        Stack<Integer> stack = new Stack<>();
 
         while (n-- > 0) {
             StringTokenizer st = new StringTokenizer(br.readLine());
-
             String cmd = st.nextToken();
+
             switch (cmd) {
                 case "push":
-                    int x = Integer.parseInt(st.nextToken());
-                    stk.push(x);
+                    stack.add(Integer.parseInt(st.nextToken()));
                     break;
                 case "pop":
-                    bw.write((stk.isEmpty() ? -1 : stk.pop()) + "\n");
+                    bw.write((stack.isEmpty() ? -1 : stack.pop()) + "\n");
                     break;
                 case "size":
-                    bw.write(stk.size() + "\n");
+                    bw.write(stack.size() + "\n");
                     break;
                 case "empty":
-                    bw.write((stk.isEmpty() ? 1 : 0) + "\n");
+                    bw.write((stack.isEmpty() ? 1 : 0) + "\n");
                     break;
                 default:
-                    bw.write((stk.isEmpty() ? -1 : stk.peek()) + "\n");
+                    bw.write((stack.isEmpty() ? -1 : stack.peek()) + "\n");
             }
         }
 
