@@ -10,18 +10,18 @@ public class Main {
         int n = Integer.parseInt(st.nextToken());
         int k = Integer.parseInt(st.nextToken());
 
-        LinkedList<Integer> list = new LinkedList<>();
+        Queue<Integer> q = new LinkedList<>();
         for (int i = 1; i <= n; i++)
-            list.add(i);
+            q.add(i);
 
         bw.write("<");
-        while (!list.isEmpty()) {
+        while (!q.isEmpty()) {
             for (int i = 0; i < k - 1; i++)
-                list.add(list.poll());
+                q.add(q.poll());
 
-            bw.write(list.poll() + "");
+            bw.write(q.poll() + "");
 
-            if (!list.isEmpty())
+            if (!q.isEmpty())
                 bw.write(", ");
         }
         bw.write(">");
