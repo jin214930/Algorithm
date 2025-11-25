@@ -6,43 +6,46 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-        Stack<Character> st1 = new Stack<>();
-        Stack<Character> st2 = new Stack<>();
-
         String s = br.readLine();
-        for (char c : s.toCharArray())
-            st1.add(c);
-
         int m = Integer.parseInt(br.readLine());
+        List<Character> list = new LinkedList<>();
+        for (char c : s.toCharArray())
+            list.add(c);
+
+        ListIterator<Character> iter = list.listIterator();
+        while (iter.hasNext())
+            iter.next();
+
         while (m-- > 0) {
             StringTokenizer st = new StringTokenizer(br.readLine());
             String cmd = st.nextToken();
+
             switch (cmd) {
                 case "L":
-                    if (!st1.empty())
-                        st2.add(st1.pop());
+                    if (iter.hasPrevious())
+                        iter.previous();
                     break;
                 case "D":
-                    if (!st2.empty())
-                        st1.add(st2.pop());
+                    if (iter.hasNext())
+                        iter.next();
                     break;
                 case "B":
-                    if (!st1.empty())
-                        st1.pop();
+                    if (iter.hasPrevious()) {
+                        iter.previous();
+                        iter.remove();
+                    }
                     break;
-                default:
-                    char c = st.nextToken().charAt(0);
-                    st1.add(c);
+                case "P":
+                    iter.add(st.nextToken().charAt(0));
+                    break;
             }
         }
 
-        while (!st1.empty())
-            st2.add(st1.pop());
-        while (!st2.empty())
-            bw.write(st2.pop());
+        for (char c : list)
+            bw.write(c);
 
         bw.flush();
-        br.close();
         bw.close();
+        br.close();
     }
 }
