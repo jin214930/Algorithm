@@ -5,6 +5,7 @@ public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
         int n = Integer.parseInt(br.readLine());
 
         while (n-- > 0) {
@@ -12,27 +13,24 @@ public class Main {
             String a = st.nextToken();
             String b = st.nextToken();
 
-            int[] cnta = new int[26];
-            int[] cntb = new int[26];
+            int[] cntA = new int[26];
+            int[] cntB = new int[26];
 
             for (char c : a.toCharArray())
-                cnta[c - 'a']++;
-            for (char c : b.toCharArray())
-                cntb[c - 'a']++;
+                cntA[c - 'a']++;
 
-            boolean flag = false;
+            for (char c : b.toCharArray())
+                cntB[c - 'a']++;
+
+            boolean flag = true;
             for (int i = 0; i < 26; i++) {
-                if (cnta[i] != cntb[i]) {
-                    bw.write("Impossible\n");
-                    flag = true;
+                if (cntA[i] != cntB[i]) {
+                    flag = false;
                     break;
                 }
             }
 
-            if (flag)
-                continue;
-
-            bw.write("Possible\n");
+            bw.write(flag ? "Possible\n" : "Impossible\n");
         }
 
         bw.flush();
