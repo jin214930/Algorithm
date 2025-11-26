@@ -13,13 +13,9 @@ public class Main {
             int n = Integer.parseInt(br.readLine());
 
             Deque<String> dq = new ArrayDeque<>();
-            String x = br.readLine();
-            String[] tmp = x.substring(1, x.length() - 1).split(",");
-
-            if (n > 0) {
-                for (String s : tmp)
-                    dq.add(s);
-            }
+            StringTokenizer st = new StringTokenizer(br.readLine(), "[],");
+            for (int i = 0; i < n; i++)
+                dq.add(st.nextToken());
 
             boolean reverse = false;
             boolean error = false;
