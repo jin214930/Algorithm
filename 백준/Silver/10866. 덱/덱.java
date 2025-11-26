@@ -7,7 +7,8 @@ public class Main {
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
         int n = Integer.parseInt(br.readLine());
-        Deque<Integer> dq = new LinkedList<>();
+
+        Deque<Integer> dq = new ArrayDeque<>();
         while (n-- > 0) {
             StringTokenizer st = new StringTokenizer(br.readLine());
             String cmd = st.nextToken();
@@ -17,10 +18,10 @@ public class Main {
                     dq.addFirst(Integer.parseInt(st.nextToken()));
                     break;
                 case "push_back":
-                    dq.add(Integer.parseInt(st.nextToken()));
+                    dq.addLast(Integer.parseInt(st.nextToken()));
                     break;
                 case "pop_front":
-                    bw.write((dq.isEmpty() ? -1 : dq.poll()) + "\n");
+                    bw.write((dq.isEmpty() ? -1 : dq.pollFirst()) + "\n");
                     break;
                 case "pop_back":
                     bw.write((dq.isEmpty() ? -1 : dq.pollLast()) + "\n");
@@ -29,18 +30,18 @@ public class Main {
                     bw.write(dq.size() + "\n");
                     break;
                 case "empty":
-                    bw.write(dq.isEmpty() ? "1\n" : "0\n");
+                    bw.write((dq.isEmpty() ? 1 : 0) + "\n");
                     break;
                 case "front":
-                    bw.write((dq.isEmpty() ? -1 : dq.peek()) + "\n");
+                    bw.write((dq.isEmpty() ? -1 : dq.peekFirst()) + "\n");
                     break;
-                default:
+                case "back":
                     bw.write((dq.isEmpty() ? -1 : dq.peekLast()) + "\n");
             }
         }
 
         bw.flush();
-        br.close();
         bw.close();
+        br.close();
     }
 }
