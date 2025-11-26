@@ -10,22 +10,20 @@ public class Main {
 
         while (t-- > 0) {
             String s = br.readLine();
-            Stack<Character> st = new Stack<>();
 
+            Stack<Character> st = new Stack<>();
             for (char c : s.toCharArray()) {
-                if (c == '(')
-                    st.push(c);
-                else if (!st.empty() && st.peek() == '(')
+                if (!st.isEmpty() && st.peek() == '(' && c == ')')
                     st.pop();
                 else
                     st.push(c);
             }
 
-            bw.write(st.empty() ? "YES\n" : "NO\n");
+            bw.write(st.isEmpty() ? "YES\n" : "NO\n");
         }
 
         bw.flush();
-        br.close();
         bw.close();
+        br.close();
     }
 }
