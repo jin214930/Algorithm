@@ -31,11 +31,13 @@ public class Main {
         int[][][] visited = new int[n][m][2];
         q.add(new Node(0, 0, 0));
         visited[0][0][0] = 1;
-
+        int ans = -1;
         while (!q.isEmpty()) {
             Node node = q.poll();
-            if (node.y == n - 1 && node.x == m - 1)
+            if (node.y == n - 1 && node.x == m - 1) {
+                ans = visited[n - 1][m - 1][node.b];
                 break;
+            }
 
             for (int i = 0; i < 4; i++) {
                 int ny = node.y + dy[i];
@@ -51,17 +53,7 @@ public class Main {
             }
         }
 
-        if (visited[n - 1][m - 1][0] == 0) {
-            if (visited[n - 1][m - 1][1] == 0)
-                bw.write("-1");
-            else
-                bw.write(visited[n - 1][m - 1][1] + "");
-        } else {
-            if (visited[n - 1][m - 1][1] == 0)
-                bw.write(visited[n - 1][m - 1][0] + "");
-            else
-                bw.write(Math.min(visited[n - 1][m - 1][0], visited[n - 1][m - 1][1]) + "");
-        }
+        bw.write(ans + "");
 
         bw.flush();
         bw.close();
