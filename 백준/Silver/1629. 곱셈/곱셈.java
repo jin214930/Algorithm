@@ -1,27 +1,34 @@
-import java.util.*;
 import java.io.*;
+import java.util.*;
 
 public class Main {
-	public static long a, b, c;
-	public static long go(long a, long b) {
-		if (b == 1)
-			return a % c;
+    static long a, b, c;
 
-		long tmp = go(a, b / 2);
-		tmp = tmp * tmp % c;
-		if (b % 2 == 1)
-			return tmp * a % c;
-		else
-			return tmp;
-	}
+    static long go(long a, long b) {
+        if (b == 1)
+            return a % c;
 
-	public static void main(String[] args) throws IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		StringTokenizer st = new StringTokenizer(br.readLine());
-		a = Integer.parseInt(st.nextToken());
-		b = Integer.parseInt(st.nextToken());
-		c = Integer.parseInt(st.nextToken());
+        long tmp = go(a, b / 2);
+        tmp = tmp * tmp % c;
+        if (b % 2 == 0)
+            return tmp;
+        else
+            return tmp * a % c;
+    }
 
-		System.out.println(go(a, b));
-	}
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        a = Long.parseLong(st.nextToken());
+        b = Long.parseLong(st.nextToken());
+        c = Long.parseLong(st.nextToken());
+
+        bw.write(go(a, b) + "");
+
+        bw.flush();
+        bw.close();
+        br.close();
+    }
 }
