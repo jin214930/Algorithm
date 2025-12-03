@@ -1,0 +1,46 @@
+import java.io.*;
+import java.util.*;
+
+public class Main {
+    static int[][] a;
+    static int[] ans = new int[2];
+
+    static void go(int y, int x, int n) {
+        int tmp = a[y][x];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (a[y][x] != a[y + i][x + j]) {
+                    go(y, x, n / 2);
+                    go(y + n / 2, x, n / 2);
+                    go(y, x + n / 2, n / 2);
+                    go(y + n / 2, x + n / 2, n / 2);
+                    return;
+                }
+            }
+        }
+        ans[tmp]++;
+    }
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+        int n = Integer.parseInt(br.readLine());
+
+        a = new int[n][n];
+        for (int i = 0; i < n; i++) {
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            for (int j = 0; j < n; j++)
+                a[i][j] = Integer.parseInt(st.nextToken());
+        }
+
+        go(0, 0, n);
+
+        for (int i : ans)
+            bw.write(i + "\n");
+
+        bw.flush();
+        bw.close();
+        br.close();
+    }
+}
