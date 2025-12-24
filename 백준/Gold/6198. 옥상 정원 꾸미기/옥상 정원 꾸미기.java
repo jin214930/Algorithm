@@ -7,22 +7,23 @@ public class Main {
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
         int n = Integer.parseInt(br.readLine());
+        int[] a = new int[n + 1];
+        a[n] = 1000000000;
+        for (int i = 0; i < n; i++)
+            a[i] = Integer.parseInt(br.readLine());
 
-        Stack<Integer> st = new Stack<>();
         long ans = 0;
-        while (n-- > 0) {
-            int h = Integer.parseInt(br.readLine());
-
-            while (!st.isEmpty() && st.peek() <= h)
+        Stack<Integer> st = new Stack<>();
+        for (int i = 0; i <= n; i++) {
+            while (!st.isEmpty() && a[i] >= a[st.peek()]) {
+                ans += i - st.peek() - 1;
                 st.pop();
-            ans += st.size();
-            st.push(h);
+            }
+
+            st.push(i);
         }
 
         bw.write(ans + "");
-
         bw.flush();
-        bw.close();
-        br.close();
     }
 }
