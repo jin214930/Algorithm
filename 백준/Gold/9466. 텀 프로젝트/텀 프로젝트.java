@@ -1,52 +1,52 @@
-import java.util.*;
 import java.io.*;
+import java.util.*;
 
 public class Main {
-	static int n, ans;
-	static int[] a;
-	static boolean[] visited, finish;
+    static int n, cnt;
+    static int[] s;
+    static boolean[] visited, finished;
 
-	static void dfs(int x) {
-		visited[x] = true;
-		int nx = a[x];
-		if (!visited[nx])
-			dfs(nx);
-		else if (!finish[nx]) {
-			int tx = x;
-			while (true) {
-				ans--;
-				tx = a[tx];
-				if (tx == x)
-					break;
-			}
-		}
-		finish[x] = true;
-	}
+    static void dfs(int x) {
+        visited[x] = true;
 
-	public static void main(String[] args) throws IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-		int t = Integer.parseInt(br.readLine());
-		while (t-- > 0) {
-			n = Integer.parseInt(br.readLine());
-			StringTokenizer st = new StringTokenizer(br.readLine());
-			a = new int[n + 1];
-			for (int i = 1; i <= n; i++)
-				a[i] = Integer.parseInt(st.nextToken());
+        int nx = s[x];
+        if (!visited[nx])
+            dfs(nx);
+        else {
+            if (!finished[nx]) {
+                cnt++;
+                for (int i = nx; i != x; i = s[i])
+                    cnt++;
+            }
+        }
 
-			visited = new boolean[n + 1];
-			finish = new boolean[n + 1];
-			ans = n;
-			for (int i = 1; i <= n; i++) {
-				if (!visited[i]) {
+        finished[x] = true;
+    }
 
-					dfs(i);
-				}
-			}
-			bw.write(ans + "\n");
-		}
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-		bw.flush();
-		bw.close();
-	}
+        int t = Integer.parseInt(br.readLine());
+        while (t-- > 0) {
+            n = Integer.parseInt(br.readLine());
+            cnt = 0;
+            s = new int[n + 1];
+            finished = new boolean[n + 1];
+            visited = new boolean[n + 1];
+
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            for (int i = 1; i <= n; i++)
+                s[i] = Integer.parseInt(st.nextToken());
+
+            for (int i = 1; i <= n; i++) {
+                if (!finished[i])
+                    dfs(i);
+            }
+
+            bw.write((n - cnt) + "\n");
+        }
+
+        bw.flush();
+    }
 }
