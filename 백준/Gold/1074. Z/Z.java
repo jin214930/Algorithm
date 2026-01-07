@@ -3,30 +3,18 @@ import java.util.*;
 
 public class Main {
     static int go(int n, int r, int c) {
-        if (n == 1) {
-            if (r == 0 && c == 0)
-                return 0;
-            else if (r == 0 && c == 1)
-                return 1;
-            else if (r == 1 && c == 0)
-                return 2;
-            else
-                return 3;
-        }
+        if (n == 0) return 0;
 
-        int ret = 0;
-        int size = (int) Math.pow(2, n);
+        int half = 1 << (n - 1);
 
-        if (r < size / 2 && c < size / 2)
-            ret = go(n - 1, r, c);
-        else if (r < size / 2 && c >= size / 2)
-            ret = size * size / 4 + go(n - 1, r, c - size / 2);
-        else if (r >= size / 2 && c < size / 2)
-            ret = size * size / 2 + go(n - 1, r - size / 2, c);
-        else
-            ret = size * size / 4 * 3 + go(n - 1, r - size / 2, c - size / 2);
+        if (r < half && c < half)
+            return go(n - 1, r, c);
+        if (r < half)
+            return half * half + go(n - 1, r, c - half);
+        if (c < half)
+            return half * half * 2 + go(n - 1, r - half, c);
 
-        return ret;
+        return half * half * 3 + go(n - 1, r - half, c - half);
     }
 
     public static void main(String[] args) throws IOException {
