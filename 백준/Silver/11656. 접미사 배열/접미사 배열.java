@@ -7,18 +7,16 @@ public class Main {
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
         String s = br.readLine();
-        List<String> list = new ArrayList<>();
 
+        List<String> list = new ArrayList<>();
         for (int i = 0; i < s.length(); i++)
             list.add(s.substring(i));
 
         Collections.sort(list);
 
-        for (String t : list)
-            bw.write(t + "\n");
+        for (String str : list)
+            bw.write(str + "\n");
 
         bw.flush();
-        bw.close();
-        br.close();
     }
 }
