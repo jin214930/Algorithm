@@ -1,32 +1,34 @@
-import java.util.*;
 import java.io.*;
+import java.util.*;
 
 public class Main {
-	public static void main(String[] args) throws IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		int t = Integer.parseInt(br.readLine());
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-		while (t-- > 0) {
-			HashMap<String, Integer> mp = new HashMap<>();
-			int n = Integer.parseInt(br.readLine());
+        int t = Integer.parseInt(br.readLine());
 
-			for (int i = 0; i < n; i++) {
-				StringTokenizer st = new StringTokenizer(br.readLine());
-				st.nextToken();
-				String s = st.nextToken();
-				if (mp.containsKey(s))
-					mp.put(s, mp.get(s) + 1);
-				else
-					mp.put(s, 1);
+        while (t-- > 0) {
+            int n = Integer.parseInt(br.readLine());
 
-			}
+            Map<String, Integer> map = new HashMap<>();
+            for (int i = 0; i < n; i++) {
+                StringTokenizer st = new StringTokenizer(br.readLine());
+                st.nextToken();
 
-			int ans = 1;
-			for (int i : mp.values())
-				ans *= i + 1;
+                String type = st.nextToken();
+                map.put(type, map.getOrDefault(type, 0) + 1);
+            }
 
-			System.out.println(ans - 1);
-		}
+            int ans = 1;
+            for (int i : map.values())
+                ans *= i + 1;
 
-	}
+            bw.write((ans - 1) + "\n");
+
+        }
+
+
+        bw.flush();
+    }
 }
