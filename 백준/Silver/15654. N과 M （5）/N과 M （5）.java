@@ -2,51 +2,50 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-    static int n, m;
-    static int[] a, b;
-    static boolean[] visited;
-    static BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+	static int n, m;
+	static int[] a;
+	static boolean[] visited;
+	static StringBuilder sb = new StringBuilder();
 
-    static void go(int idx) throws IOException {
-        if (idx == m) {
-            for (int i = 0; i < m; i++) {
-                bw.write(b[i] + " ");
-            }
-            bw.write("\n");
+	static void go(List<Integer> list) {
+		if (list.size() == m) {
+			for (int i : list)
+				sb.append(i).append(" ");
+			sb.append("\n");
+			return;
+		}
 
-            return;
-        }
+		for (int i = 0; i < n; i++) {
+			if (visited[i])
+				continue;
+			visited[i] = true;
+			list.add(a[i]);
+			go(list);
+			list.remove(list.size() - 1);
+			visited[i] = false;
+		}
+	}
 
-        for (int i = 0; i < n; i++) {
-            if (visited[i])
-                continue;
-            visited[i] = true;
-            b[idx] = a[i];
-            go(idx + 1);
-            visited[i] = false;
-        }
-    }
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(br.readLine());
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		n = Integer.parseInt(st.nextToken());
+		m = Integer.parseInt(st.nextToken());
 
-        n = Integer.parseInt(st.nextToken());
-        m = Integer.parseInt(st.nextToken());
-        a = new int[n];
-        visited = new boolean[n];
+		a = new int[n];
+		st = new StringTokenizer(br.readLine());
+		for (int i = 0; i < n; i++)
+			a[i] = Integer.parseInt(st.nextToken());
 
-        st = new StringTokenizer(br.readLine());
-        for (int i = 0; i < n; i++)
-            a[i] = Integer.parseInt(st.nextToken());
-        Arrays.sort(a);
+		visited = new boolean[n];
 
-        b = new int[m];
+		Arrays.sort(a);
 
-        go(0);
+		go(new ArrayList<>());
 
-        bw.flush();
-        bw.close();
-        br.close();
-    }
+		bw.write(sb.toString());
+		bw.flush();
+	}
 }
