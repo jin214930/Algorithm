@@ -1,29 +1,47 @@
-import java.util.*;
 import java.io.*;
+import java.util.*;
 
 public class Main {
+	static int n, k;
+	static int[] a;
+
+	static boolean check(int m) {
+		int sum = 0;
+		for (int i = 0; i < n; i++)
+			sum += Math.min(a[i], m);
+
+		return k >= sum;
+	}
+
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		int n = Integer.parseInt(br.readLine());
-		int[] a = new int[n];
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+		n = Integer.parseInt(br.readLine());
+
+		int s = 0;
+		int e = 0;
+		int ans = 0;
+
+		a = new int[n];
 		StringTokenizer st = new StringTokenizer(br.readLine());
-		int s = 1, e = 0, ans = 0;
 		for (int i = 0; i < n; i++) {
 			a[i] = Integer.parseInt(st.nextToken());
 			e = Math.max(a[i], e);
 		}
-		int m = Integer.parseInt(br.readLine());
+
+		k = Integer.parseInt(br.readLine());
+
 		while (s <= e) {
-			int mid = (s + e) / 2;
-			int sum = 0;
-			for (int i : a)
-				sum += Math.min(mid, i);
-			if (sum <= m) {
-				ans = mid;
-				s = mid + 1;
+			int m = (s + e) / 2;
+			if (check(m)) {
+				s = m + 1;
+				ans = m;
 			} else
-				e = mid - 1;
+				e = m - 1;
 		}
-		System.out.println(ans);
+
+		bw.write(ans + "");
+		bw.flush();
 	}
 }
