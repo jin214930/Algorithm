@@ -1,37 +1,36 @@
 import java.util.*;
 
 class Process {
-    int priority;
-    int idx;
+    int p, idx;
     
-    public Process(int priority, int idx) {
-        this.priority = priority;
+    Process(int p, int idx) {
+        this.p = p;
         this.idx = idx;
     }
 }
 
 class Solution {
     public int solution(int[] priorities, int location) {
-        PriorityQueue<Integer> pq = new PriorityQueue<>(Collections.reverseOrder());
         Queue<Process> q = new LinkedList<>();
+        PriorityQueue<Integer> pq = new PriorityQueue<>(Collections.reverseOrder());
         
-        for (int i = 0; i < priorities.length; i++) {
-            pq.add(priorities[i]);
+        for(int i = 0; i < priorities.length; i++) {
             q.add(new Process(priorities[i], i));
+            pq.add(priorities[i]);
         }
         
         int ans = 1;
-        while (true) {
-            int mx = pq.poll();
-            while (mx != q.peek().priority) {
-                q.add(q.peek());
-                q.poll();
-            }
+        while(!q.isEmpty()) {
+            while(pq.peek() != q.peek().p) 
+                q.add(q.poll());
             
-            Process p = q.poll();
-            if (p.idx == location)
+            Process process = q.poll();
+            pq.poll();
+            if(process.idx == location)
                 return ans;
-            ans++;
+            ans++;                
         }
+        
+        return 0;
     }
 }
