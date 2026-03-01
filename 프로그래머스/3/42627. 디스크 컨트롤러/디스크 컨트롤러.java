@@ -1,49 +1,52 @@
 import java.util.*;
 
-class Job implements Comparable<Job> {
-    int n;
-    int r_time;
-    int time;
+class Job {
+    int s, l, i;
     
-    public Job(int n, int r_time, int time) {
-        this.n = n;
-        this.r_time = r_time;
-        this.time = time;
-    }
-    
-    @Override
-    public int compareTo(Job j) {
-        if (j.time == this.time) {
-            if (j.r_time == this.r_time)
-                return this.n - j.n;
-            return this.r_time - j.r_time; 
-        }
-        return this.time - j.time;
+    Job(int s, int l, int i) {
+        this.s = s;
+        this.l = l;
+        this.i = i;
     }
 }
 
 class Solution {
     public int solution(int[][] jobs) {
-        Arrays.sort(jobs, (j1, j2) -> j1[0] - j2[0]);
-        PriorityQueue<Job> pq = new PriorityQueue<>();
+        List<Job> list = new ArrayList<>();
+        for(int i = 0; i < jobs.length; i++) 
+            list.add(new Job(jobs[i][0], jobs[i][1], i));
         
-        int t = 0, idx = 0, ans = 0;
+        Collections.sort(list, (j1, j2) -> j1.s - j2.s);
         
-        while(!(idx == jobs.length && pq.isEmpty())) {
-            while(idx < jobs.length && jobs[idx][0] <= t) {
-                pq.add(new Job(idx, jobs[idx][0], jobs[idx][1]));
+        PriorityQueue<Job> pq = new PriorityQueue<>((j1, j2) -> {
+            if(j1.l == j2.l) {
+                if(j1.s == j2.s)
+                    return j1.i - j2.i;
+                return j1.s - j2.s;
+            }
+            return j1.l - j2.l;
+        });
+        
+        int idx = 0;
+        int t = 0;
+        int sum = 0;
+        while(true) {
+            if (idx == list.size() && pq.isEmpty())
+                break;
+            while(idx < list.size() && list.get(idx).s <= t) {
+                pq.add(list.get(idx));
                 idx++;
             }
             
-            if (pq.isEmpty())
-               t = jobs[idx][0];
-            else {
+            if(pq.isEmpty()) {
+                t = list.get(idx).s;
+            } else {
                 Job j = pq.poll();
-                t += j.time;
-                ans += t - j.r_time;
+                t += j.l;
+                sum += t - j.s;
             }
         }
         
-        return ans / jobs.length;
+        return sum / jobs.length;
     }
 }
