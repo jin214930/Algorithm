@@ -3,19 +3,14 @@ import java.util.*;
 class Solution {
     public int[] solution(int[] array, int[][] commands) {
         int[] ans = new int[commands.length];
-        int idx = 0;
         
+        int idx = 0;
         for (int[] command : commands) {
             List<Integer> list = new ArrayList<>();
-            int i = command[0] - 1;
-            int j = command[1] - 1;
-            int k = command[2] - 1;
-            
-            for (int l = i; l <= j; l++)
-                list.add(array[l]);
-            
+            for(int i = command[0] - 1; i < command[1]; i++)
+                list.add(array[i]);
             Collections.sort(list);
-            ans[idx++] = list.get(k);
+            ans[idx++] = list.get(command[2] - 1);
         }
         
         return ans;
