@@ -2,30 +2,37 @@ import java.util.*;
 
 class Solution {
     public int[] solution(String[] operations) {
-        PriorityQueue<Integer> mnh = new PriorityQueue<>();
-        PriorityQueue<Integer> mxh = new PriorityQueue<>(Collections.reverseOrder());
+        PriorityQueue<Integer> minH = new PriorityQueue<>();
+        PriorityQueue<Integer> maxH = new PriorityQueue<>(Collections.reverseOrder());
         
         for (String s : operations) {
-            char c = s.charAt(0);
-            int x = Integer.parseInt(s.substring(2));
+            String[] ops = s.split(" ");
+            
+            int n = Integer.parseInt(ops[1]);
 
-            if (c == 'I') {
-                mnh.add(x);
-                mxh.add(x);
-            } else if (x == 1 && !mxh.isEmpty()) { 
-                mnh.remove(mxh.poll());
-            } else if (x == -1 && !mnh.isEmpty()) {
-                mxh.remove(mnh.poll());
-            } 
+            if (ops[0].equals("I")) {
+                minH.add(n);
+                maxH.add(n);
+            } else {
+                if (minH.isEmpty())
+                    continue;
+                if (n == 1) {
+                    int x = maxH.poll();
+                    minH.remove(x);
+                } else {
+                    int x = minH.poll();
+                    maxH.remove(x);
+                }
+            }
         }
         
         int[] ans = new int[2];
         
-        if (!mxh.isEmpty()) {
-            ans[0] = mxh.peek();
-            ans[1] = mnh.peek();
+        if (!maxH.isEmpty()) {
+            ans[0] = maxH.poll();
+            ans[1] = minH.poll();
         }
         
-        return ans;
+        return ans;        
     }
 }
