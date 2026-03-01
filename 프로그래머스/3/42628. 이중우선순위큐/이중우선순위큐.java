@@ -2,8 +2,7 @@ import java.util.*;
 
 class Solution {
     public int[] solution(String[] operations) {
-        PriorityQueue<Integer> minH = new PriorityQueue<>();
-        PriorityQueue<Integer> maxH = new PriorityQueue<>(Collections.reverseOrder());
+        TreeSet<Integer> ts = new TreeSet<>();
         
         for (String s : operations) {
             String[] ops = s.split(" ");
@@ -11,26 +10,23 @@ class Solution {
             int n = Integer.parseInt(ops[1]);
 
             if (ops[0].equals("I")) {
-                minH.add(n);
-                maxH.add(n);
+                ts.add(n);
             } else {
-                if (minH.isEmpty())
+                if (ts.isEmpty())
                     continue;
                 if (n == 1) {
-                    int x = maxH.poll();
-                    minH.remove(x);
+                    ts.remove(ts.last());
                 } else {
-                    int x = minH.poll();
-                    maxH.remove(x);
+                    ts.remove(ts.first());
                 }
             }
         }
         
         int[] ans = new int[2];
         
-        if (!maxH.isEmpty()) {
-            ans[0] = maxH.poll();
-            ans[1] = minH.poll();
+        if (!ts.isEmpty()) {
+            ans[0] = ts.last();
+            ans[1] = ts.first();
         }
         
         return ans;        
