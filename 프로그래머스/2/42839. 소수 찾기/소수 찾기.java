@@ -1,40 +1,39 @@
 import java.util.*;
 
 class Solution {
-    boolean[] p = new boolean[10000000];
-    boolean[] visited;
+    boolean[] p = new boolean[10000001];
     Set<Integer> set = new HashSet<>();
+    boolean[] visited;
     
-    public void go(String s, String numbers) {
-        if (s.length() != 0) {
-            int tmp = Integer.parseInt(s);
-            if (!p[tmp])
-                set.add(tmp);
+    void go(String s, String tmp) {
+        if (tmp.length() != 0) {
+            int x = Integer.parseInt(tmp);
+            if (!p[x])
+                set.add(x);
         }
         
-        for (int i = 0; i < numbers.length(); i++) {
-            if (visited[i])
-                continue;
+        for(int i = 0; i < s.length(); i++) {
+            if (visited[i]) continue;
             visited[i] = true;
-            go(s + numbers.charAt(i), numbers);
+            go(s, tmp + s.charAt(i));
             visited[i] = false;
         }
     }
     
+    
     public int solution(String numbers) {
         p[0] = true;
         p[1] = true;
-        for (int i = 2; i < 10000000; i++) {
-            if (!p[i]) {
-                for (int j = i * 2; j < 10000000; j += i)
-                    p[j] = true;
-            }
+        for(int i = 2; i <= 10000000; i++) {
+            if (p[i]) continue;
+            for(int j = i * 2; j<= 10000000; j += i)
+                p[j] = true;
         }
         
         visited = new boolean[numbers.length()];
-        go("", numbers);
-
+        
+        go(numbers, "");
+        
         return set.size();
     }
-
 }
