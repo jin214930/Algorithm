@@ -1,17 +1,21 @@
 class Solution {
-    static int cnt;
-    public void go(int[] a, int x, int idx, int ret) {
-        if(idx == a.length) {
-            if(x == ret)
-                cnt++;
+    int ans = 0;
+    
+    void dfs(int[] numbers, int idx, int target, int sum) {
+        if (idx == numbers.length) {
+            if (target == sum)
+                ans++;
             return;
         }
-        go(a, x, idx + 1, ret + a[idx]);
-        go(a, x, idx + 1, ret - a[idx]);
+        
+        dfs(numbers, idx + 1, target, sum + numbers[idx]);
+        dfs(numbers, idx + 1, target, sum - numbers[idx]);
         
     }
+    
     public int solution(int[] numbers, int target) {
-        go(numbers, target, 0, 0);
-        return cnt;
+        dfs(numbers, 0, target, 0);
+        
+        return ans;
     }
 }
