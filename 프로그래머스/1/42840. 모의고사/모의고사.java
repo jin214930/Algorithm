@@ -2,40 +2,33 @@ import java.util.*;
 
 class Solution {
     public int[] solution(int[] answers) {
-        int[][] pattern = {
+        int[][] patterns = {
             {1, 2, 3, 4, 5},
-            {2, 1, 2, 3, 2, 4, 2, 5}, 
+            {2, 1, 2, 3, 2, 4, 2, 5},
             {3, 3, 1, 1, 2, 2, 4, 4, 5, 5}
         };
         
         int[] cnt = new int[3];
         
-        for (int i = 0; i < 3; i++) {
-            int idx = 0;
-            for (int answer : answers) {
-                if (answer == pattern[i][idx])
+        for(int i = 0; i < 3; i++) {
+            for(int j = 0; j < answers.length; j++) {
+                if (patterns[i][j % patterns[i].length] == answers[j])
                     cnt[i]++;
-                idx = (idx + 1) % pattern[i].length;
             }
         }
         
-        int mx = 0;
-        for (int i : cnt)
-            mx = Math.max(mx, i);
-        
+        int mx = Math.max(cnt[0], Math.max(cnt[1], cnt[2]));
         List<Integer> list = new ArrayList<>();
-        for (int i = 0; i < 3; i++) {
-            if (mx == cnt[i])
+        for(int i = 0; i < 3;i++) {
+            if(mx== cnt[i])
                 list.add(i + 1);
         }
         
-        Collections.sort(list);
-        
         int[] ans = new int[list.size()];
-        int idx = 0;
-        for (int i : list)
-            ans[idx++] = i;
+        for(int i = 0; i < list.size(); i++) {
+            ans[i] = list.get(i);
+        }
         
-        return ans;        
+        return ans;
     }
 }
