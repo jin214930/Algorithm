@@ -1,21 +1,23 @@
 class Solution {
-    int ans;
+    int ans = 0;
     boolean[] visited;
     
-    void go(int cnt, int k, int[][] dungeons) {
+    void go(int k, int[][] dungeons, int cnt) {
         ans = Math.max(ans, cnt);
-        for (int i = 0; i < dungeons.length; i++) {
-            if (!visited[i] && k >= dungeons[i][0]) {
-                visited[i] = true;
-                go(cnt + 1, k - dungeons[i][1], dungeons);
-                visited[i] = false;
-            }
+        for(int i = 0; i < dungeons.length; i++) {
+            if (visited[i]) continue;
+            if (dungeons[i][0] > k) continue;
+            
+            visited[i] = true;
+            go(k - dungeons[i][1], dungeons, cnt + 1);
+            visited[i] = false;            
         }
     }
     
     public int solution(int k, int[][] dungeons) {
         visited = new boolean[dungeons.length];
-        go(0, k, dungeons);
+        
+        go(k, dungeons, 0);
         
         return ans;
     }
