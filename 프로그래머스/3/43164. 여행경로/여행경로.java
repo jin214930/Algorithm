@@ -2,39 +2,36 @@ import java.util.*;
 
 class Solution {
     boolean[] used;
-    boolean flag;
     List<String> list = new ArrayList<>();
     
-    void dfs(String s, String[][] tickets) {
-        list.add(s);
-        
-        if (list.size() == tickets.length + 1) {
-            flag = true;
+    void dfs(String[][] tickets, String tmp, int depth) {
+        if (depth == tickets.length) {
+            list.add(tmp);
             return;
         }
         
-        for (int i = 0; i < tickets.length; i++) {
-            if (tickets[i][0].equals(s) && !used[i]) {
+        for(int i = 0; i < tickets.length; i++) {
+            if (used[i]) continue;
+            if (tmp.endsWith(tickets[i][0])) {
                 used[i] = true;
-                dfs(tickets[i][1], tickets);
-                if (flag)
-                    return;
+                dfs(tickets, tmp + tickets[i][1], depth + 1);
                 used[i] = false;
-                list.remove(list.size() - 1);
             }
         }
     }
     
     public String[] solution(String[][] tickets) {
-        Arrays.sort(tickets, (o1, o2) -> o1[1].compareTo(o2[1]));
         used = new boolean[tickets.length];
+
+        dfs(tickets, "ICN", 0);
         
-        dfs("ICN", tickets);
+        Collections.sort(list);
         
-        String[] ans = new String[list.size()];
-        int idx = 0;
-        for (String s : list)
-            ans[idx++] = s;
+        String[] ans = new String[tickets.length + 1];
+        for(int i = 0; i < ans.length; i++) {
+            String s = list.get(0);
+            ans[i] = s.substring(3*i, 3*i + 3);
+        }
         
         return ans;
     }
