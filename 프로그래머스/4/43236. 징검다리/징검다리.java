@@ -1,36 +1,38 @@
 import java.util.*;
 
 class Solution {
-    public int solution(int distance, int[] rocks, int n) {
-        int ans = 0;
-        Arrays.sort(rocks);
-        int a[] = new int[rocks.length + 2];
-        a[0] = 0;
-        a[a.length - 1] = distance;
-        for(int i = 0; i < a.length - 2;i++)
-            a[i + 1] = rocks[i]; 
-        int s = 1, e = distance;
-        while(s <= e) {
-            int m = (s + e) / 2;
-            if(check(a, m, n)) {
-                ans = m;
-                s = m + 1;
-            }
+    boolean check(int m, int d, int[] rocks, int n) {
+        int tmp = 0;
+        int cnt = 0;
+        for (int rock : rocks) {
+            if (rock - tmp < m)
+                cnt++;
             else
-                e = m - 1;
+                tmp = rock;
         }
-        return ans;
+        
+        if (d - tmp < m)
+            cnt++;
+        
+        return cnt <= n;
     }
     
-    public boolean check(int[] a, int m, int n) {
-        int idx = 0, cnt = 0;
-        for(int i = 1; i < a.length; i++) {
-            if(a[i] - a[idx] < m) {
-                cnt++;
-                continue;
-            }
-            idx = i;
+    public int solution(int distance, int[] rocks, int n) {
+        int s = 1;
+        int e = 1000000000;
+        
+        Arrays.sort(rocks);
+        
+        int ans = 0;
+        while(s <= e) {
+            int m = (s + e) / 2;
+            if(check(m, distance, rocks, n)) {
+                s = m + 1;
+                ans = m;
+            } else
+                e = m - 1;
         }
-        return cnt <= n;
+        
+        return ans;
     }
 }
