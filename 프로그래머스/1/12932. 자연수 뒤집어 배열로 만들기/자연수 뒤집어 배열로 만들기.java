@@ -1,16 +1,14 @@
-import java.util.*;
 class Solution {
     public int[] solution(long n) {
-        ArrayList<Integer> a = new ArrayList<>();
-        while(n != 0) {
-            a.add((int)(n % 10));
-            n/=10;
-        }
-        int[] ans = new int[a.size()];
+        String s = n + "";
+        
+        int[] ans = new int[s.length()];
+        
         int idx = 0;
-        for(int i : a) {
-            ans[idx++] = i;
+        for(int i = s.length() - 1; i >= 0; i--) {
+            ans[idx++] = s.charAt(i) - '0';
         }
+        
         return ans;
     }
 }
