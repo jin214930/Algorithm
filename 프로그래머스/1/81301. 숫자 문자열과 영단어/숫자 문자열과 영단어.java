@@ -1,58 +1,50 @@
 class Solution {
+    
     public int solution(String s) {
         int ans = 0;
-        int i = 0;
-        while (i < s.length()) {
+        
+        int idx = 0;
+        while(idx < s.length()) {
+            char c = s.charAt(idx);
             ans *= 10;
-            char c = s.charAt(i);
-            if (c >= '0' && c <= '9') {
+            if(c >= '0' && c <= '9')
                 ans += c - '0';
-                i++;
-            }
-            else if (c == 'z') 
-                i += 4;
-            else if (c == 'o') {
+            else if (c == 'z') {
+                idx+=3;
+            } else if (c == 'o') {
+                idx += 2;
                 ans += 1;
-                i += 3;
-            }
-            else if (c == 't') {
-                if (s.charAt(i + 1) == 'w') {
+            } else if (c == 't') {
+                if (s.charAt(idx + 1) == 'w') {
+                    idx += 2;
                     ans += 2;
-                    i += 3;
-                }
-                else {
+                } else {
+                    idx += 4;
                     ans += 3;
-                    i += 5;
                 }
-            }
-            else if (c == 'f') {
-                if (s.charAt(i + 1) == 'o') {
+            } else if (c == 'f') {
+                if (s.charAt(idx + 1) == 'o') 
                     ans += 4;
-                    i += 4;
-                }
-                else {
+                else
                     ans += 5;
-                    i += 4;
-                }
-            }
-            else if (c == 's') {
-                if (s.charAt(i + 1) == 'i' ) {
+                idx += 3;
+            } else if (c == 's') {
+                if (s.charAt(idx + 1) == 'i') {
+                    idx += 2;
                     ans += 6;
-                    i += 3;
-                }
-                else {
+                } else {
+                    idx += 4;
                     ans += 7;
-                    i += 5;
                 }
-            }
-            else if (c == 'e') {
+            } else if (c == 'e') {
+                idx += 4;
                 ans += 8;
-                i += 5;
-            }
-            else {
+            } else {
+                idx += 3;
                 ans += 9;
-                i += 4;
-            } 
+            }
+            
+            idx++;
         }
         
         return ans;
