@@ -1,17 +1,20 @@
-import java.util.*;
-class Solution {
+class Solution {    
     public int solution(int n) {
-        Stack<Integer> st = new Stack<>();
+        StringBuilder sb = new StringBuilder();
+        
         while(n != 0) {
-            st.push(n % 3);
+            sb.append(n % 3);
             n /= 3;
         }
+        
+        String s = sb.toString();
         int tmp = 1;
         int ans = 0;
-        while(!st.isEmpty()) {
-            ans += st.pop() * tmp;
+        for (int i = s.length() - 1; i >= 0; i--) {
+            ans += tmp * (s.charAt(i) - '0');
             tmp *= 3;
         }
+        
         return ans;
     }
 }
