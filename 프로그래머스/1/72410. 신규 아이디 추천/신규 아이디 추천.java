@@ -1,44 +1,49 @@
-import java.util.*;
-
 class Solution {
-    public String solution(String new_id) {
-        StringBuilder sb = new StringBuilder(new_id.toLowerCase());
+    public String solution(String id) {
+        id = id.toLowerCase();
         
-        int i = 0;
-        while (i < sb.length()) {
-            char c = sb.charAt(i);
-            if (!(c >= 'a' && c <= 'z' || c >= '0' && c <= '9' || c == '-' || c == '_' || c == '.')) {
-                sb.deleteCharAt(i);
-                continue;
-            }
-            i++;
+        StringBuilder sb = new StringBuilder();
+        for (char c : id.toCharArray()) {
+            if(c >= 'a' && c <= 'z')
+                sb.append(c);
+            else if (c >= '0' && c <= '9')
+                sb.append(c);
+            else if (c == '-' || c == '_' || c == '.')
+                sb.append(c);
         }
         
-        i = 0;
-        while(i < sb.length() - 1) {
-            if (sb.charAt(i) == '.' && sb.charAt(i) == sb.charAt(i + 1)) {
-                sb.deleteCharAt(i);
-                continue;
-            }
-            i++;
+        id = sb.toString();
+        sb = new StringBuilder();
+        for (int i = 0; i < id.length(); i++) {
+            char c = id.charAt(i);
+            if(c != '.')
+                sb.append(c);
+            else if (c == '.' && (i != 0 && id.charAt(i - 1) != '.'))
+                sb.append(c);
         }
         
-
-        if (sb.length() > 0 && sb.charAt(0) == '.')
-            sb.deleteCharAt(0);
-        if (sb.length() > 0 && sb.charAt(sb.length() - 1) == '.')
+        if (sb.length() != 0 && sb.charAt(sb.length() - 1) == '.')
             sb.deleteCharAt(sb.length() - 1);
-        if (sb.length() == 0)
-            sb.append("a");
-        if (sb.length() >= 16) {
-            sb.setLength(15);
-            if (sb.charAt(sb.length() - 1) == '.')
-                sb.deleteCharAt(sb.length() - 1);
+        
+        id = sb.toString();
+        
+        if(id.length() == 0)
+            id = "a";
+        
+        if (id.length() >= 16) {
+            id = id.substring(0, 15);
+            if (id.charAt(id.length() - 1) == '.')
+                id = id.substring(0, 14);
         }
-     
-        while (sb.length() < 3)
-            sb.append(sb.charAt(sb.length() - 1));
-                
-        return sb.toString();
+        
+        while(id.length() <= 2)
+            id = id + id.charAt(id.length() - 1);
+        
+        return id;
+        
+        
+                     
+    
+        
     }
 }
