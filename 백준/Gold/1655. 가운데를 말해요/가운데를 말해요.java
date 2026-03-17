@@ -1,38 +1,37 @@
-import java.util.*;
 import java.io.*;
+import java.util.*;
 
 public class Main {
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-		int n = Integer.parseInt(br.readLine());
-		PriorityQueue<Integer> mnh = new PriorityQueue<>();
-		PriorityQueue<Integer> mxh = new PriorityQueue<>(Collections.reverseOrder());
 
-		for (int i = 0; i < n; i++) {
+		int n = Integer.parseInt(br.readLine());
+
+		PriorityQueue<Integer> minH = new PriorityQueue<>();
+		PriorityQueue<Integer> maxH = new PriorityQueue<>(Collections.reverseOrder());
+
+		while (n-- > 0) {
 			int x = Integer.parseInt(br.readLine());
-			if (mxh.size() == mnh.size()) {
-				if (mxh.isEmpty())
-					mxh.add(x);
-				else {
-					if (mnh.peek() < x) {
-						mxh.add(mnh.poll());
-						mnh.add(x);
-					} else
-						mxh.add(x);
-				}
-			} else if (mxh.size() > mnh.size()) {
-				if (mxh.peek() > x) {
-					mnh.add(mxh.poll());
-					mxh.add(x);
+			if (minH.size() == maxH.size()) {
+				if (maxH.isEmpty())
+					maxH.add(x);
+				else if (minH.peek() < x) {
+					minH.add(x);
+					maxH.add(minH.poll());
 				} else
-					mnh.add(x);
+					maxH.add(x);
+			} else {
+				if (maxH.peek() > x) {
+					maxH.add(x);
+					minH.add(maxH.poll());
+				} else
+					minH.add(x);
 			}
 
-			bw.write(mxh.peek() + "\n");
+			bw.write(maxH.peek() + "\n");
 		}
 
 		bw.flush();
-		bw.close();
 	}
 }
