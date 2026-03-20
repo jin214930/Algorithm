@@ -10,16 +10,16 @@ public class Main {
 		int ans = 0;
 		while (n-- > 0) {
 			String s = br.readLine();
-			Deque<Character> st = new ArrayDeque<>();
+			Deque<Character> dq = new ArrayDeque<>();
 
 			for (char c : s.toCharArray()) {
-				if (!st.isEmpty() && st.peek() == c) {
-					st.pop();
+				if (!dq.isEmpty() && dq.peek() == c) {
+					dq.poll();
 				} else
-					st.push(c);
+					dq.push(c);
 			}
 
-			if (st.isEmpty())
+			if (dq.isEmpty())
 				ans++;
 		}
 
