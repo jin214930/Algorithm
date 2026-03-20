@@ -2,33 +2,30 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-    static long a, b, c;
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-    static long go(long a, long b) {
-        if (b == 1)
-            return a % c;
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		int a = Integer.parseInt(st.nextToken());
+		int b = Integer.parseInt(st.nextToken());
+		int c = Integer.parseInt(st.nextToken());
 
-        long tmp = go(a, b / 2);
-        tmp = tmp * tmp % c;
-        if (b % 2 == 0)
-            return tmp;
-        else
-            return tmp * a % c;
-    }
+		bw.write(go(a, b, c) + "");
 
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+		bw.flush();
+	}
 
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        a = Long.parseLong(st.nextToken());
-        b = Long.parseLong(st.nextToken());
-        c = Long.parseLong(st.nextToken());
+	static int go(int a, int b, int c) {
+		if (b == 1) {
+			return a % c;
+		}
 
-        bw.write(go(a, b) + "");
+		int tmp = go(a, b / 2, c);
 
-        bw.flush();
-        bw.close();
-        br.close();
-    }
+		long ret = (long)tmp * tmp % c;
+		if (b % 2 == 1)
+			ret = (ret * a) % c;
+		return (int)ret;
+	}
 }
