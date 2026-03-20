@@ -1,15 +1,17 @@
-import java.util.*;
 import java.io.*;
+import java.util.*;
 
 public class Main {
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		String s = br.readLine();
-		StringBuffer sb = new StringBuffer(s);
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-		if (sb.reverse().toString().equals(s))
-			System.out.println(1);
-		else
-			System.out.println(0);
+		StringBuilder sb = new StringBuilder(br.readLine());
+		String s = sb.toString();
+		String t = sb.reverse().toString();
+
+		bw.write(s.equals(t) ? "1" : "0");
+
+		bw.flush();
 	}
 }
