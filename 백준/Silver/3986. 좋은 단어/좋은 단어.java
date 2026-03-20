@@ -10,7 +10,7 @@ public class Main {
 		int ans = 0;
 		while (n-- > 0) {
 			String s = br.readLine();
-			Stack<Character> st = new Stack<>();
+			Deque<Character> st = new ArrayDeque<>();
 
 			for (char c : s.toCharArray()) {
 				if (!st.isEmpty() && st.peek() == c) {
