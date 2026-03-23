@@ -10,11 +10,12 @@ public class Main {
 
 		while (t-- > 0) {
 			int n = Integer.parseInt(br.readLine());
-
+			
 			int cnt5 = 0;
-
-			for (int i = 5; i <= n; i *= 5)
-				cnt5 += n / i;
+			while(n >= 5) {
+				cnt5 += n / 5;
+				n /= 5;
+			}
 
 			bw.write(cnt5 + "\n");
 		}
