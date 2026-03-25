@@ -42,6 +42,7 @@ public class Main {
 		q.add(node);
 		visited[node.y][node.x] = 1;
 
+		int maxD = 1;
 		while (!q.isEmpty()) {
 			Node cur = q.poll();
 			for (int i = 0; i < 4; i++) {
@@ -53,17 +54,11 @@ public class Main {
 					continue;
 				q.add(new Node(ny, nx));
 				visited[ny][nx] = visited[cur.y][cur.x] + 1;
+				maxD = Math.max(maxD, visited[ny][nx]);
 			}
 		}
 
-		int ret = 0;
-		for (int i = 0; i < n; i++) {
-			for (int j = 0; j < m; j++) {
-				ret = Math.max(ret, visited[i][j]);
-			}
-		}
-
-		ans = Math.max(ans, ret);
+		ans = Math.max(ans, maxD);
 	}
 
 	static class Node {
