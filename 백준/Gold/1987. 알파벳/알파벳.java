@@ -4,7 +4,6 @@ import java.util.*;
 public class Main {
 	static int r, c, ans;
 	static char[][] a;
-	static boolean[][] visited;
 	static boolean[] alpha = new boolean[26];
 	static int[] dy = {-1, 0, 1, 0};
 	static int[] dx = {0, 1, 0, -1};
@@ -20,10 +19,8 @@ public class Main {
 		for (int i = 0; i < r; i++) {
 			a[i] = br.readLine().toCharArray();
 		}
-
-		visited = new boolean[r][c];
+		
 		alpha[a[0][0] - 'A'] = true;
-		visited[0][0] = true;
 		dfs(0, 0, 1);
 
 		bw.write(ans + "");
@@ -38,14 +35,11 @@ public class Main {
 			int nx = x + dx[i];
 			if (ny < 0 || nx < 0 || ny >= r || nx >= c)
 				continue;
-			if (visited[ny][nx] || alpha[a[ny][nx] - 'A'])
+			if (alpha[a[ny][nx] - 'A'])
 				continue;
 			alpha[a[ny][nx] - 'A'] = true;
-			visited[ny][nx] = true;
 			dfs(ny, nx, d + 1);
 			alpha[a[ny][nx] - 'A'] = false;
-			visited[ny][nx] = false;
 		}
 	}
-
 }
