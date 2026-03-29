@@ -1,46 +1,49 @@
 #include <bits/stdc++.h>
+#include <algorithm>
+
 using namespace std;
 
-string a, b;
+string addStr(string s1, string s2) {
+    string ans = "";
+    int c = 0; 
 
-string go(string a, string b) {
-	string ret = "";
-	int c = 0;
+    int len1 = s1.length();
+    int len2 = s2.length();
 
-	reverse(a.begin(), a.end());
-	reverse(b.begin(), b.end());
+    for (int i = 0; i < len1; i++) {
+        int a = s1[len1 - i - 1] - '0';
+        int b = 0;
+        
+        if (i < len2) {
+            b = s2[len2 - i - 1] - '0';
+        }
 
-	for (int i = 0; i < a.size(); i++) {
-		int tmp = a[i] + b[i] - '0' * 2 + c;
-		c = tmp / 10;
-		ret += tmp % 10 + '0';
-	}
+        int tmp = a + b + c;
+        ans += to_string(tmp % 10);
+        c = tmp / 10;
+    }
+    
+    if (c != 0) {
+        ans += to_string(c);
+    }
 
-	for (int i = 0; i < b.size() - a.size(); i++) {
-		int tmp = b[i + a.size()] - '0' + c;
-		c = tmp / 10;
-		ret += tmp % 10 + '0';
-	}
+    reverse(ans.begin(), ans.end());
 
-	if (c)
-		ret += c + '0';
-
-	reverse(ret.begin(), ret.end());
-	return ret;
+    return ans;
 }
 
-int main()
-{
-	ios_base::sync_with_stdio(false);
-	cin.tie(NULL);
-	cout.tie(NULL);
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
 
-	cin >> a >> b;
+    string s1, s2;
+    cin >> s1 >> s2;
+    
+    if (s1.length() < s2.length()) {
+        swap(s1, s2);
+    }
 
-	if (a.size() > b.size())
-		cout << go(b, a);
-	else
-		cout << go(a, b);
+    cout << addStr(s1, s2) << "\n";
 
-	return 0;
+    return 0;
 }
