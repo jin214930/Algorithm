@@ -2,27 +2,34 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-        int n = Integer.parseInt(br.readLine());
-        boolean[] check = new boolean[2000001];
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        for (int i = 0; i < n; i++)
-            check[Integer.parseInt(st.nextToken())] = true;
-        int x = Integer.parseInt(br.readLine());
+		int n = Integer.parseInt(br.readLine());
+		int[] a = new int[n];
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		for (int i = 0; i < n; i++) {
+			a[i] = Integer.parseInt(st.nextToken());
+		}
+		int x = Integer.parseInt(br.readLine());
 
-        int ans = 0;
-        for (int i = 1; i < (x + 1) / 2; i++) {
-            if (check[i] && check[x - i])
-                ans++;
-        }
+		Arrays.sort(a);
+		int s = 0, e = n - 1;
+		int ans = 0;
+		while (s < e) {
+			if (a[s] + a[e] == x) {
+				ans++;
+				s++;
+			} else if (a[s] + a[e] < x) {
+				s++;
+			} else {
+				e--;
+			}
+		}
 
-        bw.write(ans + "");
+		bw.write(ans + "");
 
-        bw.flush();
-        bw.close();
-        br.close();
-    }
+		bw.flush();
+	}
 }
