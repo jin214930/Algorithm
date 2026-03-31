@@ -1,52 +1,43 @@
 import java.io.*;
 import java.util.*;
 
+import javax.sound.sampled.Line;
+
 public class Main {
-	static class Line {
-		int s, t;
-
-		public Line(int s, int t) {
-			this.s = s;
-			this.t = t;
-		}
-	}
-
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
 		int n = Integer.parseInt(br.readLine());
-		Line[] lines = new Line[n];
-
+		int[][] a = new int[n][2];
 		for (int i = 0; i < n; i++) {
 			StringTokenizer st = new StringTokenizer(br.readLine());
-			int s = Integer.parseInt(st.nextToken());
-			int t = Integer.parseInt(st.nextToken());
-			lines[i] = new Line(s, t);
+			a[i][0] = Integer.parseInt(st.nextToken());
+			a[i][1] = Integer.parseInt(st.nextToken());
 		}
 
-		Arrays.sort(lines, (c1, c2) -> {
-			if (c1.s == c2.s) {
-				return c1.t - c2.t;
+		Arrays.sort(a, (o1, o2) -> {
+			if (o1[0] == o2[0]) {
+				return o1[1] - o2[1];
 			}
-			return c1.s - c2.s;
+			return o1[0] - o2[0];
 		});
 
 		int ans = 0;
-		int start = lines[0].s;
-		int end = lines[0].t;
-		for (int i = 1; i < n; i++) {
-			if (lines[i].s > end) {
-				ans += end - start;
-				start = lines[i].s;
-				end = lines[i].t;
+		int s = a[0][0], e = a[0][1];
+		for (int i = 0; i < n; i++) {
+			if (a[i][0] > e) {
+				ans += e - s;
+				s = a[i][0];
+				e = a[i][1];
 			} else {
-				end = Math.max(end, lines[i].t);
+				e = Math.max(e, a[i][1]);
 			}
 		}
-		ans += end - start;
 
+		ans += e - s;
 		bw.write(ans + "\n");
+
 		bw.flush();
 	}
 }
