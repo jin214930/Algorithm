@@ -1,8 +1,6 @@
 import java.io.*;
 import java.util.*;
 
-import javax.sound.sampled.Line;
-
 public class Main {
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -25,7 +23,7 @@ public class Main {
 
 		int ans = 0;
 		int s = a[0][0], e = a[0][1];
-		for (int i = 0; i < n; i++) {
+		for (int i = 1; i < n; i++) {
 			if (a[i][0] > e) {
 				ans += e - s;
 				s = a[i][0];
