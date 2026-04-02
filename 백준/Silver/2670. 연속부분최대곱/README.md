@@ -4,7 +4,7 @@
 
 ### 성능 요약
 
-메모리: 2176 KB, 시간: 0 ms
+메모리: 18444 KB, 시간: 152 ms
 
 ### 분류
 
@@ -12,13 +12,13 @@
 
 ### 제출 일자
 
-2026년 03월 14일 21:45:41
+2026년 4월 2일 14:03:20
 
 ### 문제 설명
 
 <p>N개의 실수가 있을 때, 한 개 이상의 연속된 수들의 곱이 최대가 되는 부분을 찾아, 그 곱을 출력하는 프로그램을 작성하시오. 예를 들어 아래와 같이 8개의 양의 실수가 주어진다면,</p>
 
-<p><img alt="" src="" style="width: 600px; height: 49px; "></p>
+<p><img alt="" src="https://www.acmicpc.net/upload/images/Kr2fhViNP7YfNWrhf77jJeXwsd.png" style="width: 600px; height: 49px; "></p>
 
 <p>색칠된 부분의 곱이 최대가 되며, 그 값은 1.638이다.</p>
 
