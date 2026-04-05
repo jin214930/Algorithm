@@ -11,17 +11,16 @@ public class Main {
 		int[] a = new int[n];
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		int m = 0;
+		int sum = 0;
 		for (int i = 0; i < n; i++) {
 			a[i] = Integer.parseInt(st.nextToken());
 			m = Math.max(m, a[i]);
+			sum += a[i];
 		}
 
-		double sum = 0;
-		for (int i = 0; i < n; i++) {
-			sum += (double)a[i] / m * 100;
-		}
+		double ans = (double)sum / n / m * 100;
 
-		bw.write((sum / n) + "");
+		bw.write(ans + "");
 
 		bw.flush();
 	}
