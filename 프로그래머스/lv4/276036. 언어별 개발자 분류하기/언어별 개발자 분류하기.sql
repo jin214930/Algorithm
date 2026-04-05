@@ -1,0 +1,31 @@
+-- 코드를 작성해주세요
+WITH DEV_GRADE AS (
+    SELECT ID, CASE
+    WHEN SKILL_CODE & (
+        SELECT CODE
+        FROM SKILLCODES
+        WHERE NAME = 'Python'
+    ) != 0
+    AND (
+        SELECT COUNT(*)
+        FROM SKILLCODES
+        WHERE SKILL_CODE & CODE != 0 AND CATEGORY = 'Front End'
+    ) >= 1 THEN 'A'
+    WHEN SKILL_CODE & (
+        SELECT CODE
+        FROM SKILLCODES
+        WHERE NAME = 'C#'
+    ) >= 1 THEN 'B'
+    WHEN (
+        SELECT COUNT(*)
+        FROM SKILLCODES
+        WHERE SKILL_CODE & CODE != 0 AND CATEGORY = 'Front End'
+        ) >= 1 THEN 'C'
+    ELSE 'D'
+    END GRADE
+    FROM DEVELOPERS
+)
+SELECT GRADE, G.ID, EMAIL
+FROM DEVELOPERS D JOIN DEV_GRADE G ON D.ID = G.ID
+WHERE GRADE != 'D'
+ORDER BY GRADE, G.ID
