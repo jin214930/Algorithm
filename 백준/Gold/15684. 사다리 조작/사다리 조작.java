@@ -23,32 +23,26 @@ public class Main {
 			map[a][b] = true;
 		}
 
-		go(0, 1, 1);
+		go(1, 0);
 
 		bw.write((ans == 4 ? -1 : ans) + "");
 		bw.flush();
 	}
 
-	static void go(int idx, int r, int c) {
-		if (idx >= ans) {
+	static void go(int here, int cnt) {
+		if (cnt > 3 || cnt >= ans)
 			return;
-		}
 
 		if (check()) {
-			ans = idx;
+			ans = cnt;
 			return;
 		}
 
-		if (idx == 3) {
-			return;
-		}
-
-		for (int i = r; i <= h; i++) {
-			int start = (i == r) ? c : 1;
-			for (int j = start; j < n; j++) {
+		for (int i = here; i <= h; i++) {
+			for (int j = 1; j < n; j++) {
 				if (!map[i][j] && !map[i][j - 1] && !map[i][j + 1]) {
 					map[i][j] = true;
-					go(idx + 1, i, j + 2);
+					go(i, cnt + 1);
 					map[i][j] = false;
 				}
 			}
