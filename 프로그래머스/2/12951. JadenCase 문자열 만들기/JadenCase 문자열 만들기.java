@@ -1,18 +1,18 @@
 class Solution {
     public String solution(String s) {
+        s = s.toLowerCase();
         StringBuilder sb = new StringBuilder();
-        boolean flag = true;
         
-        for (char c : s.toLowerCase().toCharArray()) {
-            if (flag && c >= 'a' && c <= 'z') {
-                sb.append((char) (c + 'A' - 'a'));
-                flag = false;
-            } else if (c == ' ') {
-                sb.append(c);
-                flag = true;
+        for (int i = 0; i < s.length(); i++) {
+            if (i == 0 || s.charAt(i - 1) == ' ') {
+                char c = s.charAt(i);
+                if (c >= 'a' && c <= 'z') {
+                    sb.append((char)(c - 'a' + 'A'));
+                } else {
+                    sb.append(c);
+                }
             } else {
-                sb.append(c);
-                flag = false;
+                sb.append(s.charAt(i));
             }
         }
         
