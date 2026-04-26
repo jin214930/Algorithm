@@ -8,12 +8,16 @@ public class Main {
 
 		String s;
 		while ((s = br.readLine()) != null) {
-			int n = Integer.parseInt(s);
+			int x = Integer.parseInt(s);
 
-			int tmp = 1;
+			int ones = 1;
 			int ans = 1;
-			while (tmp % n != 0) {
-				tmp = (tmp * 10 + 1) % n;
+			while (true) {
+				if (ones % x == 0) {
+					break;
+				}
+
+				ones = (ones * 10 + 1) % x;
 				ans++;
 			}
 
