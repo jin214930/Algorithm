@@ -8,19 +8,22 @@ public class Main {
 
         boolean[] p = new boolean[1000001];
         p[1] = true;
-        for (int i = 2; i <= 1000000; i++) {
+        for (int i = 2; i * i <= 1000000; i++) {
             if (!p[i]) {
-                for (int j = i * 2; j <= 1000000; j += i)
+                for (int j = i * 2; j <= 1000000; j += i) {
                     p[j] = true;
+                }
             }
         }
 
         while (true) {
             int n = Integer.parseInt(br.readLine());
-            if (n == 0)
-                break;
 
-            for (int i = 3; i <= n; i+=2) {
+            if (n == 0) {
+                break;
+            }
+
+            for (int i = 3; i <= n; i += 2) {
                 if (!p[i] && !p[n - i]) {
                     bw.write(n + " = " + i + " + " + (n - i) + "\n");
                     break;
@@ -29,7 +32,5 @@ public class Main {
         }
 
         bw.flush();
-        bw.close();
-        br.close();
     }
 }
