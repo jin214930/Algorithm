@@ -15,26 +15,18 @@ public class Main {
 			a[i] = br.readLine().toCharArray();
 		}
 
-		go();
+		check();
 		for (int i = 0; i < n; i++) {
 			for (int j = 0; j < n; j++) {
 				if (i != n - 1) {
-					char tmp = a[i][j];
-					a[i][j] = a[i + 1][j];
-					a[i + 1][j] = tmp;
-					go();
-					tmp = a[i][j];
-					a[i][j] = a[i + 1][j];
-					a[i + 1][j] = tmp;
+					swap(i, j, i + 1, j);
+					check();
+					swap(i, j, i + 1, j);
 				}
 				if (j != n - 1) {
-					char tmp = a[i][j];
-					a[i][j] = a[i][j + 1];
-					a[i][j + 1] = tmp;
-					go();
-					tmp = a[i][j];
-					a[i][j] = a[i][j + 1];
-					a[i][j + 1] = tmp;
+					swap(i, j, i, j + 1);
+					check();
+					swap(i, j, i, j + 1);
 				}
 			}
 		}
@@ -43,46 +35,33 @@ public class Main {
 		bw.flush();
 	}
 
-	static void go() {
-		int ret = 0;
+	static void check() {
 		for (int i = 0; i < n; i++) {
-			char tmp = '\0';
-			int cnt = 0;
-			for (int j = 0; j < n; j++) {
-				if (tmp == a[i][j]) {
-					cnt++;
+			int yCnt = 1;
+			int xCnt = 1;
+			for (int j = 1; j < n; j++) {
+				if (a[i][j] == a[i][j - 1]) {
+					yCnt++;
 				} else {
-					ret = Math.max(ret, cnt);
-					cnt = 1;
-					tmp = a[i][j];
+					ans = Math.max(ans, yCnt);
+					yCnt = 1;
 				}
 
-				if (j == n - 1) {
-					tmp = '\0';
-					ret = Math.max(ret, cnt);
+				if (a[j][i] == a[j - 1][i]) {
+					xCnt++;
+				} else {
+					ans = Math.max(ans, xCnt);
+					xCnt = 1;
 				}
 			}
+
+			ans = Math.max(ans, Math.max(yCnt, xCnt));
 		}
+	}
 
-		for (int i = 0; i < n; i++) {
-			char tmp = '\0';
-			int cnt = 0;
-			for (int j = 0; j < n; j++) {
-				if (tmp == a[j][i]) {
-					cnt++;
-				} else {
-					ret = Math.max(ret, cnt);
-					cnt = 1;
-					tmp = a[j][i];
-				}
-
-				if (j == n - 1) {
-					tmp = '\0';
-					ret = Math.max(ret, cnt);
-				}
-			}
-		}
-
-		ans = Math.max(ans, ret);
+	static void swap(int y1, int x1, int y2, int x2) {
+		char tmp = a[y1][x1];
+		a[y1][x1] = a[y2][x2];
+		a[y2][x2] = tmp;
 	}
 }
