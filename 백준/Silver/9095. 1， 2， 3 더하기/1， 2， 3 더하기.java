@@ -2,24 +2,36 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-	public static void main(String[] args) throws IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+    static int ans;
 
-		int t = Integer.parseInt(br.readLine());
-		int[] d = new int[11];
-		d[1] = 1;
-		d[2] = 2;
-		d[3] = 4;
-		for (int i = 4; i <= 10; i++) {
-			d[i] = d[i - 1] + d[i - 2] + d[i - 3];
-		}
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-		while (t-- > 0) {
-			int n = Integer.parseInt(br.readLine());
-			bw.write(d[n] + "\n");
-		}
+        int t = Integer.parseInt(br.readLine());
+        while (t-- > 0) {
+            int n = Integer.parseInt(br.readLine());
 
-		bw.flush();
-	}
+            ans = 0;
+            go(n);
+            bw.write(ans + "\n");
+        }
+
+        bw.flush();
+    }
+
+    static void go(int n) {
+        if (n < 0) {
+            return;
+        }
+
+        if (n == 0) {
+            ans++;
+            return;
+        }
+
+        go(n - 1);
+        go(n - 2);
+        go(n - 3);
+    }
 }
