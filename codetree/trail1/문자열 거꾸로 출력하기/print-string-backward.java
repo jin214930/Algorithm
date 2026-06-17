@@ -1,0 +1,18 @@
+import java.io.*;
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+        while (true) {
+            String s = br.readLine();
+            if (s.equals("END")) break;
+            StringBuilder sb = new StringBuilder(s);
+            bw.write(sb.reverse().toString() + "\n");
+        }
+
+        bw.flush();
+    }
+}
