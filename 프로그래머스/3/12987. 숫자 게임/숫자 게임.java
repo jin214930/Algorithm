@@ -2,19 +2,21 @@ import java.util.*;
 
 class Solution {
     public int solution(int[] A, int[] B) {
-        int ans = 0;
-        
         Arrays.sort(A);
         Arrays.sort(B);
         
-        int idx = B.length - 1;
-        for (int i = A.length - 1; i >= 0; i--) {
-            if (A[i] < B[idx]) {
+        int ans = 0;
+        int idx = 0;
+        
+        for (int a : A) {
+            while(idx < B.length && B[idx] <= a) {
+                idx++;
+            }
+            if (idx != B.length) {
                 ans++;
-                idx--;
+                idx++;
             }
         }
-        
         return ans;
     }
 }
