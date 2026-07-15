@@ -1,11 +1,10 @@
 class Solution {
     public boolean solution(String s) {
-        if (s.length() != 4 && s.length() != 6)
-            return false;
+        int len = s.length();
+        if (len != 4 && len != 6) return false;
         
         for (char c : s.toCharArray()) {
-            if (!(c >= '0' && c <= '9'))
-                return false;
+            if (!Character.isDigit(c)) return false;
         }
         
         return true;
