@@ -1,25 +1,16 @@
 class Solution {
     public String solution(String s, int n) {
         StringBuilder sb = new StringBuilder();
-        
         for (char c : s.toCharArray()) {
-            if (c == ' ')
+            if (c >= 'A' && c <= 'Z') {
+                sb.append((char)((c - 'A' + n) % 26 + 'A'));
+            } else if (c >= 'a' && c <= 'z') {
+                sb.append((char)((c - 'a' + n) % 26 + 'a'));
+            } else {
                 sb.append(c);
-            else {
-                if (c >= 'a' && c <= 'z') {
-                    if (c + n > 'z')
-                        sb.append((char)(c + n - 'z' + 'a' - 1));
-                    else
-                        sb.append((char)(c + n));
-                } else {
-                    if (c + n > 'Z')
-                        sb.append((char)(c + n - 'Z' + 'A' - 1));
-                    else
-                        sb.append((char)(c + n));
-                    
-                }
             }
         }
+        
         return sb.toString();
     }
 }
