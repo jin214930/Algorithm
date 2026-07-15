@@ -4,10 +4,13 @@ class Solution {
         int cnt0 = 0;
         
         while(!s.equals("1")) {
-            int tmp = s.length();
-            s = s.replaceAll("0", "");
-            cnt0 += tmp - s.length();
-            s = Integer.toBinaryString(s.length());
+            int len = s.length();
+            int cnt1 = 0;
+            for (char c : s.toCharArray()) {
+                if (c == '1') cnt1++;
+            }
+            cnt0 += len - cnt1;
+            s = Integer.toBinaryString(cnt1);
             turn++;
         }
         
