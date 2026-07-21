@@ -1,17 +1,18 @@
 class Solution {
     public String solution(int n, int t, int m, int p) {
         StringBuilder sb = new StringBuilder();
-        
-        for (int i = 0; i < 1000000; i++) 
-            sb.append(Integer.toString(i, n));
-        
-        StringBuilder ans = new StringBuilder();
-        int idx = p - 1;
-        while (ans.length() != t) {
-            ans.append(sb.charAt(idx));
-            idx += m;
+        int x = 0;
+        while (sb.length() < t * m) {
+            sb.append(Integer.toString(x, n));
+            x++;
         }
         
-        return ans.toString().toUpperCase();
+        String fullStr = sb.toString().toUpperCase();
+        sb.setLength(0);
+        for (int i = 0; i < t; i++) {
+            sb.append(fullStr.charAt(p - 1 + i * m));
+        }
+        
+        return sb.toString();
     }
 }
