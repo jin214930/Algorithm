@@ -1,27 +1,27 @@
+import java.util.*;
+
 class Solution {
     public int solution(String skill, String[] skill_trees) {
-        int[] a = new int[26];
-        for (int i = 0; i < skill.length(); i++) 
-            a[skill.charAt(i) - 'A'] = i + 1;
+        Map<Character, Integer> map = new HashMap<>();
+        for (int i = 0; i < skill.length(); i++) {
+            map.put(skill.charAt(i), i);
+        }
         
         int ans = 0;
         for (String s : skill_trees) {
-            int tmp = 0;
-            boolean flag = false;
+            int idx = 0;
+            boolean flag = true;
             for (char c : s.toCharArray()) {
-                if (a[c - 'A'] == 0)
-                    continue;
-                else if (a[c - 'A'] == tmp + 1) 
-                    tmp = a[c - 'A'];
-                else {
-                    flag = true;
-                    break;
+                if (map.containsKey(c)) {
+                    if (map.get(c).equals(idx)) {
+                        idx++;
+                    } else {
+                        flag = false;
+                        break;
+                    }
                 }
             }
-            if (flag)
-                continue;
-            ans++;
-            System.out.println(s);
+            if (flag) ans++;
         }
         
         return ans;
