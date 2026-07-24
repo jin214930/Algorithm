@@ -2,27 +2,17 @@ import java.util.*;
 
 class Solution {
     public String solution(int[] numbers) {
-        StringBuilder sb = new StringBuilder();
-        List<String> list = new ArrayList<>();
-        
-        for (int number : numbers)
-            list.add(number + "");
-        
-        Collections.sort(list, (s1, s2) -> {
-            String tmp1 = s1 + s2;
-            String tmp2 = s2 + s1;
-            return tmp2.compareTo(tmp1);
+        String[] strNums = new String[numbers.length];
+        for (int i = 0; i < numbers.length; i++) strNums[i] = numbers[i] + "";
+        Arrays.sort(strNums, (s1, s2) -> {
+            return (s2 + s1).compareTo(s1 + s2);
         });
         
-        for (String s : list)
-            sb.append(s);
+        if (strNums[0].equals("0")) return "0";
         
-        String ans = sb.toString();
-        if (ans.startsWith("0"))
-            ans = "0";
+        StringBuilder sb = new StringBuilder();
+        for (String s : strNums) sb.append(s);
         
-        return ans;
-            
-            
+        return sb.toString();
     }
 }
