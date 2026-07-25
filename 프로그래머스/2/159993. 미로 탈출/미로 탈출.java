@@ -1,28 +1,33 @@
 import java.util.*;
 
 class Solution {
-    int[] dy = {-1, 0, 1, 0};
-    int[] dx = {0, 1, 0, -1};
+    static class Node {
+        int y, x;
+        Node(int y, int x) {
+            this.y = y;
+            this.x = x;
+        }
+    }
+    
+    static int sy, sx, ey, ex, ly, lx;
+    static int[] dy = { -1, 0, 1, 0 };
+    static int[] dx = { 0, 1, 0, -1 };
     
     public int solution(String[] maps) {
         int n = maps.length;
         int m = maps[0].length();
-        
-        int sy = -1, sx = -1;
-        int ey = -1, ex = -1;
-        int ly = -1, lx = -1;
-        
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
-                if (maps[i].charAt(j) == 'S') {
+                char c = maps[i].charAt(j);
+                if (c == 'S') {
                     sy = i;
                     sx = j;
-                } else if (maps[i].charAt(j) == 'E') {
-                    ey = i;
-                    ex = j;
-                } else if (maps[i].charAt(j) == 'L') {
+                } else if (c == 'L') {
                     ly = i;
                     lx = j;
+                } else if (c == 'E') {
+                    ey = i;
+                    ex = j;
                 }
             }
         }
@@ -32,60 +37,41 @@ class Solution {
         q.add(new Node(sy, sx));
         visited[sy][sx] = 1;
         
-        while (!q.isEmpty()) {
-            Node node = q.poll();
-            if(node.y == ly && node.x == lx) 
-                break;
+        while(!q.isEmpty()) {
+            Node cur = q.poll();
+            if (cur.y == ly && cur.x == lx) break;
             for (int i = 0; i < 4; i++) {
-                int ny = node.y + dy[i];
-                int nx = node.x + dx[i];
+                int ny = cur.y + dy[i];
+                int nx = cur.x + dx[i];
                 if (ny < 0 || nx < 0 || ny >= n || nx >= m) continue;
-                if (visited[ny][nx] != 0 || maps[ny].charAt(nx) == 'X') continue;
+                if (maps[ny].charAt(nx) == 'X' || visited[ny][nx] != 0) continue;
                 q.add(new Node(ny, nx));
-                visited[ny][nx] = visited[node.y][node.x] + 1;
+                visited[ny][nx] = visited[cur.y][cur.x] + 1;
             }
         }
         
-        System.out.println(visited[ly][lx]);
-        
-        if (visited[ly][lx] == 0) {
-            return -1;
-        }
-        
+        if (visited[ly][lx] == 0) return -1;
         int ans = visited[ly][lx] - 1;
         
-        q = new LinkedList<>();
+        q.clear();
         visited = new int[n][m];
         q.add(new Node(ly, lx));
         visited[ly][lx] = 1;
-        
-        while (!q.isEmpty()) {
-            Node node = q.poll();
-            if(node.y == ey && node.x == ex) 
-                break;
+        while(!q.isEmpty()) {
+            Node cur = q.poll();
+            if (cur.y == ey && cur.x == ex) break;
             for (int i = 0; i < 4; i++) {
-                int ny = node.y + dy[i];
-                int nx = node.x + dx[i];
+                int ny = cur.y + dy[i];
+                int nx = cur.x + dx[i];
                 if (ny < 0 || nx < 0 || ny >= n || nx >= m) continue;
-                if (visited[ny][nx] != 0 || maps[ny].charAt(nx) == 'X') continue;
+                if (maps[ny].charAt(nx) == 'X' || visited[ny][nx] != 0) continue;
                 q.add(new Node(ny, nx));
-                visited[ny][nx] = visited[node.y][node.x] + 1;
+                visited[ny][nx] = visited[cur.y][cur.x] + 1;
             }
         }
         
-        if (visited[ey][ex] == 0) {
-            return -1;
-        }
+        if (visited[ey][ex] == 0) return -1;
         
         return ans + visited[ey][ex] - 1;
-    }
-    
-    class Node {
-        int y, x;
-        
-        Node(int y, int x) {
-            this.y = y;
-            this.x = x;
-        }
     }
 }
