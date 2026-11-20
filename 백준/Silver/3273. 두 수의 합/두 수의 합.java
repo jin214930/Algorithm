@@ -7,24 +7,20 @@ public class Main {
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
 		int n = Integer.parseInt(br.readLine());
-		int[] a = new int[n];
+		boolean[] check = new boolean[1000001];
+
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		for (int i = 0; i < n; i++) {
-			a[i] = Integer.parseInt(st.nextToken());
+			int x = Integer.parseInt(st.nextToken());
+			check[x] = true;
 		}
+
 		int x = Integer.parseInt(br.readLine());
 
-		Arrays.sort(a);
-		int s = 0, e = n - 1;
 		int ans = 0;
-		while (s < e) {
-			if (a[s] + a[e] == x) {
+		for (int i = 1; i <= (x - 1) / 2; i++) {
+			if (check[i] && x - i <= 1000000 && check[x - i]) {
 				ans++;
-				s++;
-			} else if (a[s] + a[e] < x) {
-				s++;
-			} else {
-				e--;
 			}
 		}
 
