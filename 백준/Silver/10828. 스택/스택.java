@@ -7,33 +7,33 @@ public class Main {
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
         int n = Integer.parseInt(br.readLine());
-
-        Stack<Integer> stack = new Stack<>();
+        Deque<Integer> stack = new ArrayDeque<>();
 
         while (n-- > 0) {
             StringTokenizer st = new StringTokenizer(br.readLine());
             String cmd = st.nextToken();
-
-            switch (cmd) {
-                case "push":
-                    stack.add(Integer.parseInt(st.nextToken()));
-                    break;
-                case "pop":
-                    bw.write((stack.isEmpty() ? -1 : stack.pop()) + "\n");
-                    break;
-                case "size":
-                    bw.write(stack.size() + "\n");
-                    break;
-                case "empty":
-                    bw.write((stack.isEmpty() ? 1 : 0) + "\n");
-                    break;
-                default:
-                    bw.write((stack.isEmpty() ? -1 : stack.peek()) + "\n");
+            if (cmd.equals("push")) {
+                int x = Integer.parseInt(st.nextToken());
+                stack.push(x);
+            } else if (cmd.equals("pop")) {
+                if (stack.isEmpty()) {
+                    bw.write("-1\n");
+                } else {
+                    bw.write(stack.pop() + "\n");
+                }
+            } else if (cmd.equals("size")) {
+                bw.write(stack.size() + "\n");
+            } else if (cmd.equals("empty")) {
+                bw.write(stack.isEmpty() ? "1\n" : "0\n");
+            } else {
+                if (stack.isEmpty()) {
+                    bw.write("-1\n");
+                } else {
+                    bw.write(stack.peek() + "\n");
+                }
             }
         }
-
+        
         bw.flush();
-        bw.close();
-        br.close();
     }
 }
