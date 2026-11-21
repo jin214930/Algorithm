@@ -7,30 +7,35 @@ public class Main {
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
         int n = Integer.parseInt(br.readLine());
-        int[] a = new int[n];
-        for (int i = 0; i < n; i++)
-            a[i] = Integer.parseInt(br.readLine());
 
-        Stack<Integer> st = new Stack<>();
-        StringBuilder sb = new StringBuilder();
+        int[] a = new int[n];
+        for (int i = 0; i < n; i++) {
+            a[i] = Integer.parseInt(br.readLine());
+        }
+
+        Deque<Integer> stack = new ArrayDeque<>();
+        List<Character> list = new ArrayList<>();
         int idx = 0;
+
         for (int i = 1; i <= n; i++) {
-            st.push(i);
-            sb.append("+\n");
-            while (!st.isEmpty() && st.peek() == a[idx]) {
-                sb.append("-\n");
-                st.pop();
+            stack.push(i);
+            list.add('+');
+
+            while (!stack.isEmpty() && stack.peek() == a[idx]) {
+                stack.pop();
+                list.add('-');
                 idx++;
             }
         }
 
-        if (!st.isEmpty())
+        if (!stack.isEmpty()) {
             bw.write("NO");
-        else
-            bw.write(sb.toString());
+        } else {
+            for (char c : list) {
+                bw.write(c + "\n");
+            }
+        }
 
         bw.flush();
-        bw.close();
-        br.close();
     }
 }
