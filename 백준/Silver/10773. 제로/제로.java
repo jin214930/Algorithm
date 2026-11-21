@@ -7,24 +7,20 @@ public class Main {
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
         int k = Integer.parseInt(br.readLine());
-
-        Stack<Integer> st = new Stack<>();
+        Deque<Integer> stack = new ArrayDeque<>();
         while (k-- > 0) {
             int x = Integer.parseInt(br.readLine());
-            if (x == 0)
-                st.pop();
-            else
-                st.push(x);
+            if (x == 0) stack.pop();
+            else stack.push(x);
         }
 
-        int sum = 0;
-        while (!st.isEmpty())
-            sum += st.pop();
+        int ans = 0;
+        while (!stack.isEmpty()) {
+            ans += stack.pop();
+        }
 
-        bw.write(sum + "");
+        bw.write(ans + "");
 
         bw.flush();
-        bw.close();
-        br.close();
     }
 }
