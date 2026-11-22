@@ -8,22 +8,24 @@ public class Main {
 
         int n = Integer.parseInt(br.readLine());
         int[] a = new int[n + 1];
-        a[n] = 1000000000;
-        for (int i = 0; i < n; i++)
+
+        for (int i = 0; i < n; i++) {
             a[i] = Integer.parseInt(br.readLine());
+        }
+        a[n] = Integer.MAX_VALUE;
 
+        Deque<Integer> stack = new ArrayDeque<>();
         long ans = 0;
-        Stack<Integer> st = new Stack<>();
         for (int i = 0; i <= n; i++) {
-            while (!st.isEmpty() && a[i] >= a[st.peek()]) {
-                ans += i - st.peek() - 1;
-                st.pop();
+            while (!stack.isEmpty() && a[i] >= a[stack.peek()]) {
+                int idx = stack.pop();
+                ans += i - idx - 1;
             }
-
-            st.push(i);
+            stack.push(i);
         }
 
         bw.write(ans + "");
+
         bw.flush();
     }
 }
