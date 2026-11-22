@@ -7,24 +7,27 @@ public class Main {
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
         int n = Integer.parseInt(br.readLine());
-        StringTokenizer st = new StringTokenizer(br.readLine());
         int[] a = new int[n];
-        for (int i = 0; i < n; i++)
-            a[i] = Integer.parseInt(st.nextToken());
 
-        Stack<Integer> stk = new Stack<>();
-        int[] ans = new int[n];
-        for (int i = n - 1; i >= 0; i--) {
-            while (!stk.isEmpty() && a[stk.peek()] < a[i])
-                ans[stk.pop()] = i + 1;
-            stk.push(i);
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        for (int i = 0; i < n; i++) {
+            a[i] = Integer.parseInt(st.nextToken());
         }
 
-        for (int i : ans)
-            bw.write(i + " ");
+        int[] ans = new int[n];
+        Deque<Integer> stack = new ArrayDeque<>();
+        for (int i = n - 1; i >= 0; i--) {
+            while (!stack.isEmpty() && a[i] > a[stack.peek()]) {
+                ans[stack.pop()] = i + 1;
+            }
+
+            stack.push(i);
+        }
+
+        for (int i = 0; i < n; i++) {
+            bw.write(ans[i] + " ");
+        }
 
         bw.flush();
-        bw.close();
-        br.close();
     }
 }
