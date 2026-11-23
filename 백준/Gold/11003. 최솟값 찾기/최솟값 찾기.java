@@ -2,42 +2,36 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-	static class Node {
-		int idx, x;
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-		public Node(int idx, int x) {
-			this.idx = idx;
-			this.x = x;
-		}
-	}
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int n = Integer.parseInt(st.nextToken());
+        int l = Integer.parseInt(st.nextToken());
 
-	public static void main(String[] args) throws IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        int[] a = new int[n];
+        st = new StringTokenizer(br.readLine());
+        for (int i = 0; i < n; i++) {
+            a[i] = Integer.parseInt(st.nextToken());
+        }
 
-		StringTokenizer st = new StringTokenizer(br.readLine());
-		int n = Integer.parseInt(st.nextToken());
-		int l = Integer.parseInt(st.nextToken());
+        Deque<Integer> dq = new ArrayDeque<>();
 
-		st = new StringTokenizer(br.readLine());
+        for (int i = 0; i < n; i++) {
+            while (!dq.isEmpty() && a[dq.peekLast()] >= a[i]) {
+                dq.pollLast();
+            }
 
-		Deque<Node> dq = new ArrayDeque<>();
+            dq.offerLast(i);
 
-		for (int i = 0; i < n; i++) {
-			int x = Integer.parseInt(st.nextToken());
+            if (dq.peekFirst() <= i - l) {
+                dq.pollFirst();
+            }
 
-			while (!dq.isEmpty() && dq.peekLast().x >= x) {
-				dq.pollLast();
-			}
+            bw.write(a[dq.peekFirst()] + " ");
+        }
 
-			dq.addLast(new Node(i, x));
-
-			if (dq.peekFirst().idx <= i - l)
-				dq.pollFirst();
-
-			bw.write(dq.peekFirst().x + " ");
-		}
-
-		bw.flush();
-	}
+        bw.flush();
+    }
 }
