@@ -9,18 +9,17 @@ public class Main {
         int n = Integer.parseInt(br.readLine());
 
         Queue<Integer> q = new LinkedList<>();
-        for (int i = 1; i <= n; i++)
-            q.add(i);
+        for (int i = 1; i <= n; i++) {
+            q.offer(i);
+        }
 
         while (q.size() > 1) {
             q.poll();
-            q.add(q.poll());
+            q.offer(q.poll());
         }
 
         bw.write(q.poll() + "");
-        
+
         bw.flush();
-        bw.close();
-        br.close();
     }
 }
