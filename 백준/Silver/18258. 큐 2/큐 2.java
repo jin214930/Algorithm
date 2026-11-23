@@ -10,35 +10,39 @@ public class Main {
 
         Queue<Integer> q = new LinkedList<>();
         int x = 0;
+
         while (n-- > 0) {
             StringTokenizer st = new StringTokenizer(br.readLine());
             String cmd = st.nextToken();
 
-            switch (cmd) {
-                case "push":
-                    x = Integer.parseInt(st.nextToken());
-                    q.add(x);
-                    break;
-                case "pop":
-                    bw.write((q.isEmpty() ? -1 : q.poll()) + "\n");
-                    break;
-                case "size":
-                    bw.write(q.size() + "\n");
-                    break;
-                case "empty":
-                    bw.write((q.isEmpty() ? 1 : 0) + "\n");
-                    break;
-                case "front":
-                    bw.write((q.isEmpty() ? -1 : q.peek()) + "\n");
-                    break;
-                case "back":
-                    bw.write((q.isEmpty() ? -1 : x) + "\n");
+            if (cmd.equals("push")) {
+                x = Integer.parseInt(st.nextToken());
+                q.offer(x);
+            } else if (cmd.equals("pop")) {
+                if (!q.isEmpty()) {
+                    bw.write(q.poll() + "\n");
+                } else {
+                    bw.write("-1\n");
+                }
+            } else if (cmd.equals("size")) {
+                bw.write(q.size() + "\n");
+            } else if (cmd.equals("empty")) {
+                bw.write(q.isEmpty() ? "1\n" : "0\n");
+            } else if (cmd.equals("front")) {
+                if (!q.isEmpty()) {
+                    bw.write(q.peek() + "\n");
+                } else {
+                    bw.write("-1\n");
+                }
+            } else {
+                if (!q.isEmpty()) {
+                    bw.write(x + "\n");
+                } else {
+                    bw.write("-1\n");
+                }
             }
         }
 
-
         bw.flush();
-        bw.close();
-        br.close();
     }
 }
