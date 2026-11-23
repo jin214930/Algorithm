@@ -11,18 +11,21 @@ public class Main {
         int m = Integer.parseInt(st.nextToken());
 
         Deque<Integer> dq = new ArrayDeque<>();
-        for (int i = 1; i <= n; i++)
-            dq.add(i);
+        for (int i = 1; i <= n; i++) {
+            dq.offerLast(i);
+        }
 
         st = new StringTokenizer(br.readLine());
         int ans = 0;
-        while (m-- > 0) {
+        for (int i = 0; i < m; i++) {
             int x = Integer.parseInt(st.nextToken());
+
             int cnt = 0;
-            while (dq.peek() != x) {
+            while (dq.peekFirst() != x) {
+                dq.offerLast(dq.pollFirst());
                 cnt++;
-                dq.addLast(dq.pollFirst());
             }
+
             ans += Math.min(cnt, dq.size() - cnt);
             dq.pollFirst();
         }
@@ -30,7 +33,5 @@ public class Main {
         bw.write(ans + "");
 
         bw.flush();
-        bw.close();
-        br.close();
     }
 }
