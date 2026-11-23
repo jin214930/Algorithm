@@ -7,41 +7,49 @@ public class Main {
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
         int n = Integer.parseInt(br.readLine());
-
         Deque<Integer> dq = new ArrayDeque<>();
+
         while (n-- > 0) {
             StringTokenizer st = new StringTokenizer(br.readLine());
             String cmd = st.nextToken();
 
-            switch (cmd) {
-                case "push_front":
-                    dq.addFirst(Integer.parseInt(st.nextToken()));
-                    break;
-                case "push_back":
-                    dq.addLast(Integer.parseInt(st.nextToken()));
-                    break;
-                case "pop_front":
-                    bw.write((dq.isEmpty() ? -1 : dq.pollFirst()) + "\n");
-                    break;
-                case "pop_back":
-                    bw.write((dq.isEmpty() ? -1 : dq.pollLast()) + "\n");
-                    break;
-                case "size":
-                    bw.write(dq.size() + "\n");
-                    break;
-                case "empty":
-                    bw.write((dq.isEmpty() ? 1 : 0) + "\n");
-                    break;
-                case "front":
-                    bw.write((dq.isEmpty() ? -1 : dq.peekFirst()) + "\n");
-                    break;
-                case "back":
-                    bw.write((dq.isEmpty() ? -1 : dq.peekLast()) + "\n");
+            if (cmd.equals("push_front")) {
+                int x = Integer.parseInt(st.nextToken());
+                dq.addFirst(x);
+            } else if (cmd.equals("push_back")) {
+                int x = Integer.parseInt(st.nextToken());
+                dq.addLast(x);
+            } else if (cmd.equals("pop_front")) {
+                if (!dq.isEmpty()) {
+                    bw.write(dq.pollFirst() + "\n");
+                } else {
+                    bw.write("-1\n");
+                }
+            } else if (cmd.equals("pop_back")) {
+                if (!dq.isEmpty()) {
+                    bw.write(dq.pollLast() + "\n");
+                } else {
+                    bw.write("-1\n");
+                }
+            } else if (cmd.equals("size")) {
+                bw.write(dq.size() + "\n");
+            } else if (cmd.equals("empty")) {
+                bw.write(dq.isEmpty() ? "1\n" : "0\n");
+            } else if (cmd.equals("front")) {
+                if (!dq.isEmpty()) {
+                    bw.write(dq.peekFirst() + "\n");
+                } else {
+                    bw.write("-1\n");
+                }
+            } else {
+                if (!dq.isEmpty()) {
+                    bw.write(dq.peekLast() + "\n");
+                } else {
+                    bw.write("-1\n");
+                }
             }
         }
 
         bw.flush();
-        bw.close();
-        br.close();
     }
 }
