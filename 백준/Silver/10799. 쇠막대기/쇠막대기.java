@@ -7,19 +7,19 @@ public class Main {
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
         String s = br.readLine();
+        Deque<Character> stack = new ArrayDeque<>();
 
         int ans = 0;
-        Stack<Character> st = new Stack<>();
         for (int i = 0; i < s.length(); i++) {
             char c = s.charAt(i);
-            if (c == '(')
-                st.push(c);
-            else {
+
+            if (c == '(') {
+                stack.push(c);
+            } else {
+                stack.poll();
                 if (s.charAt(i - 1) == '(') {
-                    st.pop();
-                    ans += st.size();
+                    ans += stack.size();
                 } else {
-                    st.pop();
                     ans++;
                 }
             }
@@ -28,7 +28,5 @@ public class Main {
         bw.write(ans + "");
 
         bw.flush();
-        bw.close();
-        br.close();
     }
 }
