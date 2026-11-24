@@ -8,38 +8,44 @@ public class Main {
 
         String s = br.readLine();
 
-        Stack<Character> st = new Stack<>();
         int ans = 0;
         int tmp = 1;
+        Deque<Character> stack = new ArrayDeque<>();
+
         for (int i = 0; i < s.length(); i++) {
             char c = s.charAt(i);
+
             if (c == '(') {
-                st.push(c);
+                stack.push(c);
                 tmp *= 2;
             } else if (c == '[') {
-                st.push(c);
+                stack.push(c);
                 tmp *= 3;
-            } else if (c == ')' && !st.isEmpty() && st.peek() == '(') {
-                if (s.charAt(i - 1) == '(')
-                    ans += tmp;
-                st.pop();
-                tmp /= 2;
-            } else if (c == ']' && !st.isEmpty() && st.peek() == '[') {
-                if (s.charAt(i - 1) == '[')
-                    ans += tmp;
-                st.pop();
-                tmp /= 3;
-            } else
-                st.push(c);
+            } else if (c == ')') {
+                if (!stack.isEmpty() && stack.peek() == '(') {
+                    if (i - 1 >= 0 && s.charAt(i - 1) == '(') {
+                        ans += tmp;
+                    }
+                    tmp /= 2;
+                    stack.poll();
+                } else {
+                    stack.push(c);
+                }
+            } else {
+                if (!stack.isEmpty() && stack.peek() == '[') {
+                    if (i - 1 >= 0 && s.charAt(i - 1) == '[') {
+                        ans += tmp;
+                    }
+                    tmp /= 3;
+                    stack.poll();
+                } else {
+                    stack.push(c);
+                }
+            }
         }
 
-        if (!st.isEmpty())
-            ans = 0;
-
-        bw.write(ans + "");
+        bw.write((stack.isEmpty() ? ans : 0) + "");
 
         bw.flush();
-        bw.close();
-        br.close();
     }
 }
