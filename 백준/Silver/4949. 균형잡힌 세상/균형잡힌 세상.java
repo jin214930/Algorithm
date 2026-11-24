@@ -2,37 +2,40 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-	public static void main(String[] args) throws IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-		while (true) {
-			String s = br.readLine();
-			if (s.equals("."))
-				break;
+        while (true) {
+            String s = br.readLine();
 
-			Stack<Character> st = new Stack<>();
-			for (char c : s.toCharArray()) {
-				if (c == '(' || c == '[') {
-					st.add(c);
-				} else if (c == ')') {
-					if (!st.isEmpty() && st.peek() == '(') {
-						st.pop();
-					} else {
-						st.add(c);
-					}
-				} else if (c == ']') {
-					if (!st.isEmpty() && st.peek() == '[') {
-						st.pop();
-					} else {
-						st.add(c);
-					}
-				}
-			}
+            if (s.equals(".")) {
+                break;
+            }
 
-			bw.write((st.isEmpty() ? "yes\n" : "no\n"));
-		}
+            Deque<Character> stack = new ArrayDeque<>();
+            for (char c : s.toCharArray()) {
+                if (c == '(' || c == '[') {
+                    stack.push(c);
+                } else if (c == ']') {
+                    if (!stack.isEmpty() && stack.peek() == '[') {
+                        stack.poll();
+                    } else {
+                        stack.push(c);
+                    }
+                } else if (c == ')') {
+                    if (!stack.isEmpty() && stack.peek() == '(') {
+                        stack.poll();
+                    } else {
+                        stack.push(c);
+                    }
+                }
+            }
 
-		bw.flush();
-	}
+            bw.write(stack.isEmpty() ? "yes\n" : "no\n");
+
+        }
+
+        bw.flush();
+    }
 }
