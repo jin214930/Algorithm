@@ -2,84 +2,99 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-	static int[] dy = {-1, 0, 1, 0};
-	static int[] dx = {0, 1, 0, -1};
+    static class Node {
+        int y, x;
 
-	public static void main(String[] args) throws IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        public Node(int y, int x) {
+            this.y = y;
+            this.x = x;
+        }
+    }
 
-		StringTokenizer st = new StringTokenizer(br.readLine());
-		int r = Integer.parseInt(st.nextToken());
-		int c = Integer.parseInt(st.nextToken());
+    static int[] dy = { -1, 0, 1, 0 };
+    static int[] dx = { 0, 1, 0, -1 };
 
-		Queue<Node> qP = new LinkedList<>();
-		int[][] visited = new int[r][c];
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-		Queue<Node> qF = new LinkedList<>();
-		int[][] fire = new int[r][c];
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int n = Integer.parseInt(st.nextToken());
+        int m = Integer.parseInt(st.nextToken());
 
-		char[][] a = new char[r][c];
-		for (int i = 0; i < r; i++) {
-			String s = br.readLine();
-			for (int j = 0; j < c; j++) {
-				a[i][j] = s.charAt(j);
-				fire[i][j] = Integer.MAX_VALUE;
-				if (a[i][j] == 'J') {
-					qP.add(new Node(i, j));
-					visited[i][j] = 1;
-				} else if (a[i][j] == 'F') {
-					qF.add(new Node(i, j));
-					fire[i][j] = 1;
-				}
-			}
-		}
+        char[][] a = new char[n][m];
 
-		while (!qF.isEmpty()) {
-			Node node = qF.poll();
-			for (int i = 0; i < 4; i++) {
-				int ny = node.y + dy[i];
-				int nx = node.x + dx[i];
-				if (ny < 0 || nx < 0 || ny >= r || nx >= c)
-					continue;
-				if (a[ny][nx] == '#' || fire[ny][nx] != Integer.MAX_VALUE)
-					continue;
-				qF.add(new Node(ny, nx));
-				fire[ny][nx] = fire[node.y][node.x] + 1;
-			}
-		}
+        Queue<Node> qF = new LinkedList<>();
+        int[][] fire = new int[n][m];
+        Queue<Node> qP = new LinkedList<>();
+        int[][] people = new int[n][m];
 
-		while (!qP.isEmpty()) {
-			Node node = qP.poll();
-			if (node.y == 0 || node.x == 0 || node.y == r - 1 || node.x == c - 1) {
-				bw.write(visited[node.y][node.x] + "");
-				bw.flush();
-				return;
-			}
+        for (int i = 0; i < n; i++) {
+            Arrays.fill(fire[i], Integer.MAX_VALUE);
+        }
 
-			for (int i = 0; i < 4; i++) {
-				int ny = node.y + dy[i];
-				int nx = node.x + dx[i];
-				if (ny < 0 || nx < 0 || ny >= r || nx >= c)
-					continue;
-				if (a[ny][nx] == '#' || visited[ny][nx] != 0 || fire[ny][nx] <= visited[node.y][node.x] + 1)
-					continue;
-				qP.add(new Node(ny, nx));
-				visited[ny][nx] = visited[node.y][node.x] + 1;
-			}
-		}
+        for (int i = 0; i < n; i++) {
+            String s = br.readLine();
+            for (int j = 0; j < m; j++) {
+                a[i][j] = s.charAt(j);
 
-		bw.write("IMPOSSIBLE");
+                if (a[i][j] == 'F') {
+                    qF.offer(new Node(i, j));
+                    fire[i][j] = 1;
+                } else if (a[i][j] == 'J') {
+                    qP.offer(new Node(i, j));
+                    people[i][j] = 1;
+                }
+            }
+        }
 
-		bw.flush();
-	}
+        while (!qF.isEmpty()) {
+            Node cur = qF.poll();
 
-	static class Node {
-		int y, x;
+            for (int i = 0; i < 4; i++) {
+                int ny = cur.y + dy[i];
+                int nx = cur.x + dx[i];
 
-		Node(int y, int x) {
-			this.y = y;
-			this.x = x;
-		}
-	}
+                if (ny < 0 || nx < 0 || ny >= n || nx >= m)
+                    continue;
+                if (a[ny][nx] == '#' || fire[ny][nx] != Integer.MAX_VALUE)
+                    continue;
+                qF.add(new Node(ny, nx));
+                fire[ny][nx] = fire[cur.y][cur.x] + 1;
+            }
+        }
+
+        int ans = 0;
+        while (!qP.isEmpty()) {
+            Node cur = qP.poll();
+
+            if (cur.y == 0 || cur.y == n - 1 || cur.x == 0 || cur.x == m - 1) {
+                ans = people[cur.y][cur.x];
+                break;
+            }
+
+            for (int i = 0; i < 4; i++) {
+                int ny = cur.y + dy[i];
+                int nx = cur.x + dx[i];
+
+                if (ny < 0 || nx < 0 || ny >= n || nx >= m)
+                    continue;
+                if (a[ny][nx] == '#' || people[ny][nx] != 0)
+                    continue;
+                if (people[cur.y][cur.x] + 1 >= fire[ny][nx])
+                    continue;
+
+                qP.offer(new Node(ny, nx));
+                people[ny][nx] = people[cur.y][cur.x] + 1;
+            }
+        }
+
+        if (ans == 0) {
+            bw.write("IMPOSSIBLE");
+        } else {
+            bw.write(ans + "");
+        }
+
+        bw.flush();
+    }
 }
