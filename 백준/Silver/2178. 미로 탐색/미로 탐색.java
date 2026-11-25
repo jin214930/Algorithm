@@ -2,51 +2,57 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-	static int[] dy = {-1, 0, 1, 0};
-	static int[] dx = {0, 1, 0, -1};
+    static class Node {
+        int y, x;
 
-	public static void main(String[] args) throws IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        public Node(int y, int x) {
+            this.y = y;
+            this.x = x;
+        }
+    }
 
-		StringTokenizer st = new StringTokenizer(br.readLine());
-		int n = Integer.parseInt(st.nextToken());
-		int m = Integer.parseInt(st.nextToken());
-		char[][] a = new char[n][m];
-		for (int i = 0; i < n; i++) {
-			a[i] = br.readLine().toCharArray();
-		}
+    static int[] dy = { -1, 0, 1, 0 };
+    static int[] dx = { 0, 1, 0, -1 };
 
-		int[][] visited = new int[n][m];
-		Queue<Node> q = new LinkedList<>();
-		q.add(new Node(0, 0));
-		visited[0][0] = 1;
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-		while (!q.isEmpty()) {
-			Node node = q.poll();
-			for (int i = 0; i < 4; i++) {
-				int ny = node.y + dy[i];
-				int nx = node.x + dx[i];
-				if (ny < 0 || nx < 0 || ny >= n || nx >= m)
-					continue;
-				if (a[ny][nx] == '0' || visited[ny][nx] != 0)
-					continue;
-				q.add(new Node(ny, nx));
-				visited[ny][nx] = visited[node.y][node.x] + 1;
-			}
-		}
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int n = Integer.parseInt(st.nextToken());
+        int m = Integer.parseInt(st.nextToken());
 
-		bw.write(visited[n - 1][m - 1] + "");
+        char[][] a = new char[n][m];
+        for (int i = 0; i < n; i++) {
+            a[i] = br.readLine().toCharArray();
+        }
 
-		bw.flush();
-	}
+        Queue<Node> q = new LinkedList<>();
+        int[][] visited = new int[n][m];
 
-	static class Node {
-		int y, x;
+        q.add(new Node(0, 0));
+        visited[0][0] = 1;
 
-		public Node(int y, int x) {
-			this.y = y;
-			this.x = x;
-		}
-	}
+        while (!q.isEmpty()) {
+            Node cur = q.poll();
+            if (cur.y == n - 1 && cur.x == m - 1)
+                break;
+
+            for (int i = 0; i < 4; i++) {
+                int ny = cur.y + dy[i];
+                int nx = cur.x + dx[i];
+
+                if (ny < 0 || nx < 0 || ny >= n || nx >= m)
+                    continue;
+                if (a[ny][nx] == '0' || visited[ny][nx] != 0)
+                    continue;
+                q.add(new Node(ny, nx));
+                visited[ny][nx] = visited[cur.y][cur.x] + 1;
+            }
+        }
+
+        bw.write(visited[n - 1][m - 1] + "");
+
+        bw.flush();
+    }
 }
