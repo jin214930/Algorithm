@@ -5,16 +5,16 @@ public class Main {
     static class Node {
         int z, y, x;
 
-        Node(int z, int y, int x) {
+        public Node(int z, int y, int x) {
             this.z = z;
             this.y = y;
             this.x = x;
         }
     }
 
-    static int[] dy = {-1, 1, 0, 0, 0, 0};
-    static int[] dx = {0, 0, -1, 1, 0, 0};
-    static int[] dz = {0, 0, 0, 0, -1, 1};
+    static int[] dz = { 1, -1, 0, 0, 0, 0 };
+    static int[] dy = { 0, 0, 1, -1, 0, 0 };
+    static int[] dx = { 0, 0, 0, 0, 1, -1 };
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -28,13 +28,14 @@ public class Main {
         int[][][] a = new int[h][n][m];
         int[][][] visited = new int[h][n][m];
         Queue<Node> q = new LinkedList<>();
+
         for (int i = 0; i < h; i++) {
             for (int j = 0; j < n; j++) {
                 st = new StringTokenizer(br.readLine());
                 for (int k = 0; k < m; k++) {
                     a[i][j][k] = Integer.parseInt(st.nextToken());
                     if (a[i][j][k] == 1) {
-                        q.add(new Node(i, j, k));
+                        q.offer(new Node(i, j, k));
                         visited[i][j][k] = 1;
                     }
                 }
@@ -42,15 +43,19 @@ public class Main {
         }
 
         while (!q.isEmpty()) {
-            Node node = q.poll();
+            Node cur = q.poll();
+
             for (int i = 0; i < 6; i++) {
-                int nz = node.z + dz[i];
-                int ny = node.y + dy[i];
-                int nx = node.x + dx[i];
-                if (nz < 0 || ny < 0 || nx < 0 || nz >= h || ny >= n || nx >= m || a[nz][ny][nx] != 0 || visited[nz][ny][nx] != 0)
+                int nz = cur.z + dz[i];
+                int ny = cur.y + dy[i];
+                int nx = cur.x + dx[i];
+
+                if (nz < 0 || ny < 0 || nx < 0 || nz >= h || ny >= n || nx >= m)
                     continue;
-                q.add(new Node(nz, ny, nx));
-                visited[nz][ny][nx] = visited[node.z][node.y][node.x] + 1;
+                if (visited[nz][ny][nx] != 0 || a[nz][ny][nx] == -1)
+                    continue;
+                q.offer(new Node(nz, ny, nx));
+                visited[nz][ny][nx] = visited[cur.z][cur.y][cur.x] + 1;
             }
         }
 
@@ -58,18 +63,18 @@ public class Main {
         for (int i = 0; i < h; i++) {
             for (int j = 0; j < n; j++) {
                 for (int k = 0; k < m; k++) {
-                    if (a[i][j][k] == 0 && visited[i][j][k] == 0)
-                        ans = Integer.MAX_VALUE;
-                    else
-                        ans = Math.max(ans, visited[i][j][k]);
+                    if (a[i][j][k] == 0 && visited[i][j][k] == 0) {
+                        bw.write("-1");
+                        bw.flush();
+                        return;
+                    }
+                    ans = Math.max(ans, visited[i][j][k] - 1);
                 }
             }
         }
 
-        bw.write((ans == Integer.MAX_VALUE ? -1 : ans - 1) + "");
+        bw.write(ans + "");
 
         bw.flush();
-        bw.close();
-        br.close();
     }
 }
