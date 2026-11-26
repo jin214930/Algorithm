@@ -1,24 +1,24 @@
 # [Silver I] 나이트의 이동 - 7562 
 
-[문제 링크](https://www.acmicpc.net/problem/7562) 
+[문제 링크](https://acmicpc.net/problem/7562) 
 
 ### 성능 요약
 
-메모리: 113300 KB, 시간: 308 ms
+메모리: 76452 KB, 시간: 357 ms
 
 ### 분류
 
-너비 우선 탐색, 그래프 이론, 그래프 탐색
+너비 우선 탐색, 그래프, 그래프 탐색, 격자 그래프, 최단 경로
 
 ### 제출 일자
 
-2024년 11월 5일 11:19:14
+2026년 11월 26일 12:34:54
 
 ### 문제 설명
 
 <p>체스판 위에 한 나이트가 놓여져 있다. 나이트가 한 번에 이동할 수 있는 칸은 아래 그림에 나와있다. 나이트가 이동하려고 하는 칸이 주어진다. 나이트는 몇 번 움직이면 이 칸으로 이동할 수 있을까?</p>
 
-<p><img alt="" src="https://www.acmicpc.net/upload/images/knight.png" style="height:172px; width:175px"></p>
+<p><img alt="" src="https://acmicpc.net/upload/images/knight.png" style="height:172px; width:175px"></p>
 
 ### 입력 
 
