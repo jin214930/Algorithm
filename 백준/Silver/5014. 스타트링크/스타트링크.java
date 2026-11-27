@@ -15,25 +15,29 @@ public class Main {
 
         Queue<Integer> q = new LinkedList<>();
         int[] visited = new int[f + 1];
-        q.add(s);
+        q.offer(s);
         visited[s] = 1;
 
         while (!q.isEmpty()) {
             int x = q.poll();
-            for (int nx : new int[]{x + u, x - d}) {
-                if (nx <= 0 || nx > f || visited[nx] != 0) continue;
-                q.add(nx);
+            if (x == g)
+                break;
+
+            for (int nx : new int[] { x + u, x - d }) {
+                if (nx <= 0 || nx > f || visited[nx] != 0)
+                    continue;
+
+                q.offer(nx);
                 visited[nx] = visited[x] + 1;
             }
         }
 
-        if (visited[g] == 0)
+        if (visited[g] == 0) {
             bw.write("use the stairs");
-        else
+        } else {
             bw.write((visited[g] - 1) + "");
+        }
 
         bw.flush();
-        bw.close();
-        br.close();
     }
 }
