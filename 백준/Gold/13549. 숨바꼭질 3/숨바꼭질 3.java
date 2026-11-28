@@ -12,7 +12,8 @@ public class Main {
 
         Queue<Integer> q = new LinkedList<>();
         int[] visited = new int[200001];
-        q.add(n);
+
+        q.offer(n);
         visited[n] = 1;
 
         while (!q.isEmpty()) {
@@ -21,17 +22,17 @@ public class Main {
             if (x == k)
                 break;
 
-            for (int i = 2 * x; i <= 200000; i *= 2) {
-                if (i == 0)
+            for (int nx = 2 * x; nx <= 200000; nx *= 2) {
+                if (visited[nx] != 0)
                     break;
-                if (visited[i] != 0) continue;
-                q.add(i);
-                visited[i] = visited[x];
+                q.offer(nx);
+                visited[nx] = visited[x];
             }
 
-            for (int nx : new int[]{x - 1, x + 1}) {
-                if (nx < 0 || nx > 200000 || visited[nx] != 0) continue;
-                q.add(nx);
+            for (int nx : new int[] { x - 1, x + 1 }) {
+                if (nx < 0 || nx > 200000 || visited[nx] != 0)
+                    continue;
+                q.offer(nx);
                 visited[nx] = visited[x] + 1;
             }
         }
@@ -39,7 +40,5 @@ public class Main {
         bw.write((visited[k] - 1) + "");
 
         bw.flush();
-        bw.close();
-        br.close();
     }
 }
