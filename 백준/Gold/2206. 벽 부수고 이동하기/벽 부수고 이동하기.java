@@ -5,15 +5,15 @@ public class Main {
     static class Node {
         int y, x, b;
 
-        Node(int y, int x, int b) {
+        public Node(int y, int x, int b) {
             this.y = y;
             this.x = x;
             this.b = b;
         }
     }
 
-    static int[] dy = {-1, 1, 0, 0};
-    static int[] dx = {0, 0, -1, 1};
+    static int[] dy = { -1, 1, 0, 0 };
+    static int[] dx = { 0, 0, -1, 1 };
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -24,39 +24,45 @@ public class Main {
         int m = Integer.parseInt(st.nextToken());
 
         char[][] a = new char[n][m];
-        for (int i = 0; i < n; i++)
+        for (int i = 0; i < n; i++) {
             a[i] = br.readLine().toCharArray();
+        }
 
         Queue<Node> q = new LinkedList<>();
         int[][][] visited = new int[n][m][2];
-        q.add(new Node(0, 0, 0));
+        q.offer(new Node(0, 0, 0));
         visited[0][0][0] = 1;
-        int ans = -1;
+
         while (!q.isEmpty()) {
-            Node node = q.poll();
-            if (node.y == n - 1 && node.x == m - 1) {
-                ans = visited[n - 1][m - 1][node.b];
-                break;
+            Node cur = q.poll();
+            if (cur.y == n - 1 && cur.x == m - 1) {
+                bw.write(visited[cur.y][cur.x][cur.b] + "");
+                bw.flush();
+                return;
             }
 
             for (int i = 0; i < 4; i++) {
-                int ny = node.y + dy[i];
-                int nx = node.x + dx[i];
-                if (ny < 0 || nx < 0 || ny >= n || nx >= m) continue;
-                if (a[ny][nx] == '1' && visited[ny][nx][1] == 0 && node.b == 0) {
-                    q.add(new Node(ny, nx, 1));
-                    visited[ny][nx][1] = visited[node.y][node.x][0] + 1;
-                } else if (a[ny][nx] == '0' && visited[ny][nx][node.b] == 0) {
-                    q.add(new Node(ny, nx, node.b));
-                    visited[ny][nx][node.b] = visited[node.y][node.x][node.b] + 1;
+                int ny = cur.y + dy[i];
+                int nx = cur.x + dx[i];
+
+                if (ny < 0 || nx < 0 || ny >= n || nx >= m)
+                    continue;
+                if (a[ny][nx] == '0') {
+                    if (visited[ny][nx][cur.b] != 0)
+                        continue;
+                    q.offer(new Node(ny, nx, cur.b));
+                    visited[ny][nx][cur.b] = visited[cur.y][cur.x][cur.b] + 1;
+                } else {
+                    if (cur.b == 1 || visited[ny][nx][1] != 0)
+                        continue;
+                    q.offer(new Node(ny, nx, 1));
+                    visited[ny][nx][1] = visited[cur.y][cur.x][0] + 1;
                 }
             }
         }
 
-        bw.write(ans + "");
+        bw.write("-1");
 
         bw.flush();
-        bw.close();
-        br.close();
     }
 }
